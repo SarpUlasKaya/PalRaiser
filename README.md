@@ -1,0 +1,2 @@
+# PalRaiser
+PalRaiser is a crowdfunding website where users can publish their projects to receive financial support from other users of the website by providing information on what their project is and why it needs funding. In addition to crowdfunding, the platform can also be used for simple social interactions with other users of the site such as following their accounts to see and be notified of their activities, share their thoughts on the platform in terms of posts, rate other users’ posts and projects, and commenting under other users’ posts and discussion topics.
