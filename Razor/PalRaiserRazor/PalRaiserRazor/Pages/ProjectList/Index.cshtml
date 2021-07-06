@@ -1,0 +1,124 @@
+﻿@page
+@model PalRaiserRazor.Pages.ProjectList.IndexModel
+
+
+<br />
+<div class="container row p-0 m-0">
+    <div class="col-8">
+        <h2 class="text-info">Project List</h2>
+    </div>
+    <div class="col-4">
+        <a asp-page="CreateProj" class="btn btn-info form-control text-white ">Create New Project</a>
+    </div>
+
+    <div class="col-12 border p-3 mt-3">
+        <form method="post">
+            @if (Model.Projects.Count() > 0)
+            {
+                <table class="table table-striped border">
+                    <tr class="table-secondary">
+                        <th>
+                            <label asp-for="Projects.FirstOrDefault().ProjName"></label>
+                        </th>
+                        <th>
+                            @*@Html.DisplayNameFor(m=>m.Projects.FirstOrDefault().Summary)*@
+                            <label asp-for="Projects.FirstOrDefault().Summary"></label>
+                        </th>
+                        <th>
+                            <label asp-for="Projects.FirstOrDefault().DetailedInfo"></label>
+                        </th>
+                        <th>
+                            <label asp-for="Projects.FirstOrDefault().Type"></label>
+                        </th>
+                        <th>
+                            <label asp-for="Projects.FirstOrDefault().AmountRaised"></label>
+                        </th>
+                        <th>
+                            <label asp-for="Projects.FirstOrDefault().LikeCount"></label>
+                        </th>
+                        <th>
+                            <label asp-for="Projects.FirstOrDefault().DislikeCount"></label>
+                        </th>
+                        <th>
+                            <label asp-for="Projects.FirstOrDefault().ReportCount"></label>
+                        </th>
+                        <th>
+                            <label asp-for="Projects.FirstOrDefault().TestValue"></label>
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                    @foreach (var item in Model.Projects)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => item.ProjName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Summary)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.DetailedInfo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.AmountRaised)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.LikeCount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.DislikeCount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.ReportCount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.TestValue)
+                            </td>
+                            <td>
+                                <button asp-page-handler="Delete" asp-route-id="@item.ProjId" onclick="return confirm('Are you sure you want to delete this project?')" class="btn btn-danger btn-sm">Delete</button>
+                                <a asp-page="EditProj" asp-route-id="@item.ProjId" class="btn btn-success btn-sm text-white">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <p>No projects found.</p>
+            }
+        </form>
+    </div>
+
+    <div class="col-12" style="text-align:center">
+        <br />
+        <span class="h3 text-info">OR</span>
+        <br /><br />
+    </div>
+    <div class="col-12 border p-3">
+        <table id="DT_load" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Summary</th>
+                    <th>About</th>
+                    <th>Type</th>
+                    <th>Amount Raised</th>
+                    <th>Like Count</th>
+                    <th>Dislike Count</th>
+                    <th>Report Count</th>
+                    <th>Test Value</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+</div>
+@section Scripts {
+    <script src="~/js/projectList.js"></script>
+}

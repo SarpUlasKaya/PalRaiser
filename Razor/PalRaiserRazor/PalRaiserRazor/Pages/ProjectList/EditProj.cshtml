@@ -1,0 +1,106 @@
+﻿@page
+@model PalRaiserRazor.Pages.ProjectList.EditProjModel
+
+<br />
+<h2 class="text-info">Edit Project</h2>
+<br />
+
+<div class="border container" style="padding: 30px;">
+    <form method="post">
+        <input type="hidden" asp-for="Project.ProjId" />
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="Project.ProjName"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Project.ProjName" class="form-control" />
+            </div>
+            <span asp-validation-for="Project.ProjName" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="Project.Summary"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Project.Summary" class="form-control" />
+            </div>
+            <span asp-validation-for="Project.Summary" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="Project.DetailedInfo"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Project.DetailedInfo" class="form-control" />
+            </div>
+            <span asp-validation-for="Project.DetailedInfo" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="Project.Type"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Project.Type" class="form-control" />
+            </div>
+            <span asp-validation-for="Project.Type" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="Project.AmountRaised"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Project.AmountRaised" class="form-control" />
+            </div>
+            <span asp-validation-for="Project.AmountRaised" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="Project.LikeCount"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Project.LikeCount" class="form-control" />
+            </div>
+            <span asp-validation-for="Project.LikeCount" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="Project.DislikeCount"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Project.DislikeCount" class="form-control" />
+            </div>
+            <span asp-validation-for="Project.DislikeCount" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="Project.ReportCount"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Project.ReportCount" class="form-control" />
+            </div>
+            <span asp-validation-for="Project.ReportCount" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="Project.TestValue"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Project.TestValue" class="form-control" />
+            </div>
+            <span asp-validation-for="Project.TestValue" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-3 offset-4">
+                <input type="submit" value="Update" class="btn btn-primary form-control" />
+            </div>
+            <div class="col-3">
+                <a asp-page="Index" class="btn btn-success form-control">Back to List</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+<partial name="_ValidationScriptsPartial" />
+}
