@@ -26,10 +26,10 @@ namespace PalRaiserMVC.Models
         public int DislikeCount { get; set; }
         public int ReportCount { get; set; }
 
-        [ForeignKey("User")]
-        public int PublisherId { get; set; }
-        
+        [ForeignKey("PublisherId")]
         public virtual User Publisher { get; set; }
+        public int? PublisherId { get; set; }
+        
         public virtual ICollection<Goal> Goals { get; set; }
         public virtual ICollection<Update> Updates { get; set; }
         public virtual ICollection<Report> Reports { get; set; }

@@ -9,6 +9,12 @@
     <Compile Remove="Migrations\20210706222514_AddProjectToDb.Designer.cs" />
     <Compile Remove="Migrations\20210706222937_AddProjectToMVCDb.cs" />
     <Compile Remove="Migrations\20210706222937_AddProjectToMVCDb.Designer.cs" />
+    <Compile Remove="Migrations\20210707172435_AddGoalsReportsTopicsRepliesUpdatesUsersToDB.cs" />
+    <Compile Remove="Migrations\20210707172435_AddGoalsReportsTopicsRepliesUpdatesUsersToDB.Designer.cs" />
+    <Compile Remove="Migrations\20210707173346_FIXAddGoalsReportsTopicsRepliesUpdatesUsersToDB.cs" />
+    <Compile Remove="Migrations\20210707173346_FIXAddGoalsReportsTopicsRepliesUpdatesUsersToDB.Designer.cs" />
+    <Compile Remove="Migrations\20210707174740_TryToFix2AddGoalsReportsTopicsRepliesUpdatesUsersToDB.cs" />
+    <Compile Remove="Migrations\20210707174740_TryToFix2AddGoalsReportsTopicsRepliesUpdatesUsersToDB.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,10 +25,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

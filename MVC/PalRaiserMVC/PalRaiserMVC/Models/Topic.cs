@@ -12,11 +12,13 @@ namespace PalRaiserMVC.Models
         [Key]
         public int TopicId { get; set; }
 
-        [ForeignKey("Project")]
-        public int ProjectId { get; set; }
+        [ForeignKey("ProjectId")]
+        public virtual Project Project { get; set; }
+        public int? ProjectId { get; set; }
 
-        [ForeignKey("User")]
-        public int CreatorId { get; set; }
+        [ForeignKey("CreatorId")]
+        public virtual User Creator { get; set; }
+        public int? CreatorId { get; set; }
 
         [Required]
         public string TopicTitle { get; set; }
@@ -25,8 +27,6 @@ namespace PalRaiserMVC.Models
 
         public DateTimeOffset Date { get; set; }
         public int NoOfReplies { get; set; }
-        
-        public virtual User Creator { get; set; }
-        public virtual Project Project { get; set; }
+
     }
 }

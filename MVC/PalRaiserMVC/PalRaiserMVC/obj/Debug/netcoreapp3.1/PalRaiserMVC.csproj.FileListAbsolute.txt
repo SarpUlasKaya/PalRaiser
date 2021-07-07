@@ -370,3 +370,4 @@ C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\netcoreapp3.1\PalRaiserMVC.genruntimeconfig.cache
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\netcoreapp3.1\Razor\Views\Projects\Index.cshtml.g.cs
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\netcoreapp3.1\Razor\Views\Projects\UpsertProj.cshtml.g.cs
+C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\netcoreapp3.1\PalRaiserMVC.csproj.AssemblyReference.cache

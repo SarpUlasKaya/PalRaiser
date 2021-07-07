@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PalRaiserMVC.Models;
 
 namespace PalRaiserMVC.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210707175126_TryExtendDatabase1")]
+    partial class TryExtendDatabase1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,9 +84,12 @@ namespace PalRaiserMVC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("ProjectId");
 
-                    b.HasIndex("PublisherId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Projects");
                 });
@@ -145,11 +150,14 @@ namespace PalRaiserMVC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("TopicId");
 
-                    b.HasIndex("CreatorId");
-
                     b.HasIndex("ProjectId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Topics");
                 });
@@ -264,7 +272,7 @@ namespace PalRaiserMVC.Migrations
                 {
                     b.HasOne("PalRaiserMVC.Models.User", "Publisher")
                         .WithMany("PublishedProjects")
-                        .HasForeignKey("PublisherId");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("PalRaiserMVC.Models.Report", b =>
@@ -280,13 +288,13 @@ namespace PalRaiserMVC.Migrations
 
             modelBuilder.Entity("PalRaiserMVC.Models.Topic", b =>
                 {
-                    b.HasOne("PalRaiserMVC.Models.User", "Creator")
-                        .WithMany("TopicsCreated")
-                        .HasForeignKey("CreatorId");
-
                     b.HasOne("PalRaiserMVC.Models.Project", "Project")
                         .WithMany()
                         .HasForeignKey("ProjectId");
+
+                    b.HasOne("PalRaiserMVC.Models.User", "Creator")
+                        .WithMany("TopicsCreated")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("PalRaiserMVC.Models.TopicReply", b =>

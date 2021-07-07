@@ -27,9 +27,11 @@ namespace PalRaiserMVC.Models
         public DateTimeOffset LastLogin { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
         public DateTime Birthday { get; set; }
-        public string gender { get; set; }
+        public string Gender { get; set; }
 
         public virtual ICollection<Project> PublishedProjects { get; set; }
         public virtual ICollection<Report> Reports { get; set; }
+        public virtual ICollection<Topic> TopicsCreated { get; set; }
+        public virtual ICollection<TopicReply> TopicReplies { get; set; }
     }
 }

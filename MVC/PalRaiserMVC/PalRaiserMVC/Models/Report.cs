@@ -12,18 +12,17 @@ namespace PalRaiserMVC.Models
         [Key]
         public int ReportId { get; set; }
 
-        [ForeignKey("Project")]
-        public int ProjectId { get; set; }
+        [ForeignKey("ProjectId")]
+        public virtual Project Project { get; set; }
+        public int? ProjectId { get; set; }
 
-        [ForeignKey("User")]
-        public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public virtual User User { get; set; }
+        public int? UserId { get; set; }
 
         public DateTimeOffset Date { get; set; }
         
         [Required]
         public string Reason { get; set; }
-
-        public virtual User User { get; set; }
-        public virtual Project Project { get; set; }
     }
 }

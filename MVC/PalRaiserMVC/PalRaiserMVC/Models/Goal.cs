@@ -11,7 +11,8 @@ namespace PalRaiserMVC.Models
     {
         public int GoalId { get; set; }
         
-        [ForeignKey("Project")]
+        [ForeignKey("ProjectId")]
+        public virtual Project Project { get; set; }
         public int ProjectId { get; set; }
         
         [Required]
@@ -20,7 +21,5 @@ namespace PalRaiserMVC.Models
         public string Description { get; set; }
 
         public bool IsReached { get; set; }
-
-        public virtual Project Project { get; set; }
     }
 }
