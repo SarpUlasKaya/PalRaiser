@@ -341,7 +341,6 @@ C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\bin\Debug
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\netcoreapp3.1\PalRaiserMVC.csproj.AssemblyReference.cache
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\netcoreapp3.1\PalRaiserMVC.AssemblyInfoInputs.cache
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\netcoreapp3.1\PalRaiserMVC.AssemblyInfo.cs
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\netcoreapp3.1\PalRaiserMVC.csproj.CoreCompileInputs.cache

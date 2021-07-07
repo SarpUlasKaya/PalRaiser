@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace PalRaiserMVC.Models
     public class Project
     {
         [Key]
-        public int ProjId { get; set; }
+        public int ProjectId { get; set; }
 
         [Required]
         public string ProjName { get; set; }
@@ -20,9 +21,17 @@ namespace PalRaiserMVC.Models
         [Required]
         public string Type { get; set; }
         
-        public string AmountRaised { get; set; }
-        public string LikeCount { get; set; }
-        public string DislikeCount { get; set; }
-        public string ReportCount { get; set; }
+        public int AmountRaised { get; set; }
+        public int LikeCount { get; set; }
+        public int DislikeCount { get; set; }
+        public int ReportCount { get; set; }
+
+        [ForeignKey("User")]
+        public int PublisherId { get; set; }
+        
+        public virtual User Publisher { get; set; }
+        public virtual ICollection<Goal> Goals { get; set; }
+        public virtual ICollection<Update> Updates { get; set; }
+        public virtual ICollection<Report> Reports { get; set; }
     }
 }

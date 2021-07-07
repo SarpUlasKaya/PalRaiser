@@ -19,7 +19,7 @@ function loadDataTable() {
             { "data": "dislikeCount", "width": "10%" },
             { "data": "reportCount", "width": "10%" },
             {
-                "data": "projId",
+                "data": "projectId",
                 "render": function (data) {
                     return `<div class="text-center">
                             <a href="/Projects/UpsertProj?id=${data}" class='btn btn-success text-white' style='cursor:pointer; width:70px;'>
