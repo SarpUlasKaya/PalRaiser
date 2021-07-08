@@ -17,7 +17,7 @@ namespace PalRaiserMVC.Models
         public int? ProjectId { get; set; }
 
         [ForeignKey("CreatorId")]
-        public virtual User Creator { get; set; }
+        public virtual ApplicationUser Creator { get; set; }
         public int? CreatorId { get; set; }
 
         [Required]

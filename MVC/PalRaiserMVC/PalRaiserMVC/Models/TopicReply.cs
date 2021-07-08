@@ -16,7 +16,7 @@ namespace PalRaiserMVC.Models
         public int TopicId { get; set; }
 
         [ForeignKey("UserId")]
-        public virtual User User { get; set; }
+        public virtual ApplicationUser User { get; set; }
         public int? UserId { get; set; }
 
         [Required]

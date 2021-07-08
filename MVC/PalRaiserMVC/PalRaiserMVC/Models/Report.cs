@@ -17,7 +17,7 @@ namespace PalRaiserMVC.Models
         public int? ProjectId { get; set; }
 
         [ForeignKey("UserId")]
-        public virtual User User { get; set; }
+        public virtual ApplicationUser User { get; set; }
         public int? UserId { get; set; }
 
         public DateTimeOffset Date { get; set; }

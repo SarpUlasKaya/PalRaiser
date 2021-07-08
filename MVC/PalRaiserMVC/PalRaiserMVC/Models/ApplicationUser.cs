@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PalRaiserMVC.Models
 {
-    public class User
+    public class ApplicationUser
     {
         [Key]
         public int UserId { get; set; }
