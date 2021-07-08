@@ -13,20 +13,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using PalRaiserMVC.Areas.Identity.Data;
+using PalRaiserMVC.Models;
 
 namespace PalRaiserMVC.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<AuthUser> _signInManager;
+        private readonly UserManager<AuthUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<AuthUser> userManager,
+            SignInManager<AuthUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -46,6 +48,16 @@ namespace PalRaiserMVC.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -60,6 +72,21 @@ namespace PalRaiserMVC.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [Range(100000000000000, 9999999999999999, ErrorMessage = "Your credit card number must be 15 or 16 digits long")]
+            [Display(Name = "Credit Card No")]
+            public int CreditCardNo { get; set; }
+
+            [Required]
+            [Range(100, 9999, ErrorMessage = "Your card security code must be 15 or 16 digits long")]
+            [Display(Name = "Card Security No")]
+            public int CardSecurityNo { get; set; }
+
+            [Required]
+            [DataType(DataType.Date)]
+            [Display(Name = "Card Expiry Date")]
+            public DateTime CardExpiryDate { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -74,7 +101,10 @@ namespace PalRaiserMVC.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var appUser = new AppUser { UserName = Input.FirstName + Input.LastName,
+                    CardNumber = Input.CreditCardNo, CardSecNo = Input.CardSecurityNo, CardExpDate = Input.CardExpiryDate };
+                var user = new AuthUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName,
+                    LastName = Input.LastName, AppUser = appUser };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

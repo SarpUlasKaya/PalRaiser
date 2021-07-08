@@ -5,19 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20210706222514_AddProjectToDb.cs" />
-    <Compile Remove="Migrations\20210706222514_AddProjectToDb.Designer.cs" />
-    <Compile Remove="Migrations\20210706222937_AddProjectToMVCDb.cs" />
-    <Compile Remove="Migrations\20210706222937_AddProjectToMVCDb.Designer.cs" />
-    <Compile Remove="Migrations\20210707172435_AddGoalsReportsTopicsRepliesUpdatesUsersToDB.cs" />
-    <Compile Remove="Migrations\20210707172435_AddGoalsReportsTopicsRepliesUpdatesUsersToDB.Designer.cs" />
-    <Compile Remove="Migrations\20210707173346_FIXAddGoalsReportsTopicsRepliesUpdatesUsersToDB.cs" />
-    <Compile Remove="Migrations\20210707173346_FIXAddGoalsReportsTopicsRepliesUpdatesUsersToDB.Designer.cs" />
-    <Compile Remove="Migrations\20210707174740_TryToFix2AddGoalsReportsTopicsRepliesUpdatesUsersToDB.cs" />
-    <Compile Remove="Migrations\20210707174740_TryToFix2AddGoalsReportsTopicsRepliesUpdatesUsersToDB.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.7" />

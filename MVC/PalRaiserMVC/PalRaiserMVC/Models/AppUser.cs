@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PalRaiserMVC.Models
 {
-    public class ApplicationUser
+    public class AppUser
     {
         [Key]
         public int UserId { get; set; }
@@ -14,15 +14,11 @@ namespace PalRaiserMVC.Models
         [Required]
         public string UserName { get; set; }
         [Required]
-        public string MailAddress { get; set; }
-        [Required]
-        public string Password { get; set; }
-        [Required]
         public int CardNumber { get; set; }
         [Required]
         public int CardSecNo { get; set; }
         [Required]
-        public int CardExpDate { get; set; }
+        public DateTime CardExpDate { get; set; }
 
         public DateTimeOffset LastLogin { get; set; }
         public DateTimeOffset CreatedAt { get; set; }

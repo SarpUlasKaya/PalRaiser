@@ -9,14 +9,14 @@ namespace PalRaiserMVC.Models
 {
     public class TopicReply
     {
-        public int ReplyId { get; set; }
+        public int TopicReplyId { get; set; }
 
         [ForeignKey("TopicId")]
         public virtual Topic Topic { get; set; }
         public int TopicId { get; set; }
 
         [ForeignKey("UserId")]
-        public virtual ApplicationUser User { get; set; }
+        public virtual AppUser User { get; set; }
         public int? UserId { get; set; }
 
         [Required]

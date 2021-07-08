@@ -27,7 +27,7 @@ namespace PalRaiserMVC.Models
         public int ReportCount { get; set; }
 
         [ForeignKey("PublisherId")]
-        public virtual ApplicationUser Publisher { get; set; }
+        public virtual AppUser Publisher { get; set; }
         public int? PublisherId { get; set; }
         
         public virtual ICollection<Goal> Goals { get; set; }

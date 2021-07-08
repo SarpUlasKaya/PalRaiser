@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace PalRaiserMVC.Models
 {
-    public class ApplicationDBContext : IdentityDbContext<IdentityUser>
+    public class ApplicationDBContext : DbContext
     {
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
+            //base.OnModelCreating(builder);
+            builder.Entity<TopicReply>().HasKey(reply => new { reply.TopicReplyId, reply.TopicId });
             builder.Entity<Goal>().HasKey(goal => new { goal.GoalId, goal.ProjectId });
             builder.Entity<Update>().HasKey(update => new { update.UpdateId, update.ProjectId });
-            builder.Entity<TopicReply>().HasKey(reply => new { reply.ReplyId, reply.TopicId });
         }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Goal> Goals { get; set; }
         public DbSet<Update> Updates { get; set; }
         public DbSet<Report> Reports { get; set; }
