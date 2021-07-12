@@ -26,5 +26,6 @@ namespace PalRaiserMVC.Models
         public int? PublisherId { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<PostRating> Ratings { get; set; }
     }
 }

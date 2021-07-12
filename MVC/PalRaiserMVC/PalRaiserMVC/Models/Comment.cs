@@ -26,5 +26,7 @@ namespace PalRaiserMVC.Models
 
         public int LikeCount { get; set; }
         public int DislikeCount { get; set; }
+
+        public virtual ICollection<CommentRating> Ratings { get; set; }
     }
 }
