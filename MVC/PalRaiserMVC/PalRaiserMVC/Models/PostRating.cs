@@ -14,7 +14,7 @@ namespace PalRaiserMVC.Models
 
         [ForeignKey("PostId")]
         public virtual Post Post { get; set; }
-        public int? PostId { get; set; }
+        public int PostId { get; set; }
 
         public bool IsLike { get; set; }
     }

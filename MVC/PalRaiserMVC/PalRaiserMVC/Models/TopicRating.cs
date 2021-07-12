@@ -10,7 +10,7 @@ namespace PalRaiserMVC.Models
     {
         [ForeignKey("UserId")]
         public virtual AppUser User { get; set; }
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
 
         [ForeignKey("TopicId")]
         public virtual Topic Topic { get; set; }

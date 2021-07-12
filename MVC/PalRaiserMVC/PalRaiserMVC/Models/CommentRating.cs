@@ -12,9 +12,13 @@ namespace PalRaiserMVC.Models
         public virtual AppUser User { get; set; }
         public int? UserId { get; set; }
 
-        [ForeignKey("CommentId")]
+        [ForeignKey("CommentId"), Column(Order = 0)]
+        public int CommentId { get; set; }
+
+        [ForeignKey("CommentId"), Column(Order = 1)]
+        public int PostId { get; set; }
+
         public virtual Comment Comment { get; set; }
-        public int? CommentId { get; set; }
 
         public bool IsLike { get; set; }
     }

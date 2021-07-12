@@ -10,11 +10,11 @@ namespace PalRaiserMVC.Models
     {
         [ForeignKey("SenderId")]
         public virtual AppUser Sender { get; set; }
-        public int? SenderId { get; set; }
+        public int SenderId { get; set; }
 
         [ForeignKey("ReceiverId")]
         public virtual AppUser Receiver { get; set; }
-        public int? ReceiverId { get; set; }
+        public int ReceiverId { get; set; }
 
         public bool IsAccepted { get; set; }
     }

@@ -9,8 +9,15 @@ namespace PalRaiserMVC.Models
 {
     public class Comment
     {
-        [Key]
         public int CommentId { get; set; }
+
+        [ForeignKey("CommentorId")]
+        public virtual AppUser Commentor { get; set; }
+        public int? CommentorId { get; set; }
+
+        [ForeignKey("PostId")]
+        public virtual Post Post { get; set; }
+        public int PostId { get; set; }
 
         [Required]
         public string Body { get; set; }
@@ -19,14 +26,6 @@ namespace PalRaiserMVC.Models
 
         public int LikeCount { get; set; }
         public int DislikeCount { get; set; }
-
-        [ForeignKey("CommentorId")]
-        public virtual AppUser Commentor { get; set; }
-        public int? CommentorId { get; set; }
-
-        [ForeignKey("PostId")]
-        public virtual Post Post { get; set; }
-        public int? PostId { get; set; }
 
         public virtual ICollection<CommentRating> Ratings { get; set; }
     }

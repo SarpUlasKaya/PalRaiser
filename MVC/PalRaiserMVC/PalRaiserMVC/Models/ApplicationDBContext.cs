@@ -17,12 +17,13 @@ namespace PalRaiserMVC.Models
             builder.Entity<TopicReply>().HasKey(reply => new { reply.TopicReplyId, reply.TopicId });
             builder.Entity<Goal>().HasKey(goal => new { goal.GoalId, goal.ProjectId });
             builder.Entity<Update>().HasKey(update => new { update.UpdateId, update.ProjectId });
+            builder.Entity<Comment>().HasKey(comment => new { comment.CommentId, comment.PostId });
             builder.Entity<ProjectRating>().HasKey(projectRating => new { projectRating.UserId, projectRating.ProjectId });
             builder.Entity<PostRating>().HasKey(postRating => new { postRating.UserId, postRating.PostId });
             builder.Entity<TopicRating>().HasKey(topicRating => new { topicRating.UserId, topicRating.TopicId });
-            builder.Entity<TopicReplyRating>().HasKey(topicReplyRating => new { topicReplyRating.UserId, topicReplyRating.TopicReplyId });
+            builder.Entity<TopicReplyRating>().HasKey(topicReplyRating => new { topicReplyRating.UserId, topicReplyRating.TopicReplyId, topicReplyRating.TopicId });
             builder.Entity<FollowRequest>().HasKey(followRequest => new { followRequest.SenderId, followRequest.ReceiverId });
-            builder.Entity<CommentRating>().HasKey(commRating => new { commRating.CommentId, commRating.UserId, });
+            builder.Entity<CommentRating>().HasKey(commRating => new { commRating.UserId, commRating.CommentId, commRating.PostId });
             //base.OnModelCreating(builder);
         }
         public DbSet<Project> Projects { get; set; }
