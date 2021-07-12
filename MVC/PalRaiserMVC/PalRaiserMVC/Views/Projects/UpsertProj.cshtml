@@ -1,14 +1,14 @@
 ﻿@model PalRaiserMVC.Models.Project
 
 <br />
-<h2 class="text-info">@(Model.ProjId!=0 ? "Edit" : "Create") Project</h2>
+<h2 class="text-info">@(Model.ProjectId!=0 ? "Edit" : "Create") Project</h2>
 <br />
 
 <div class="border container" style="padding:30px;">
     <form method="post">
-        @if (Model.ProjId != 0)
+        @if (Model.ProjectId != 0)
         {
-            <input type="hidden" asp-for="ProjId" />
+            <input type="hidden" asp-for="ProjectId" />
         }
         <div class="text_danger" asp-validation-summary="ModelOnly"></div>
         <div class="form-group row">
@@ -50,7 +50,7 @@
         <div class="form-group row">
             <div class="col-3 offset-3">
                 <button type="Submit" class="btn btn-primary form-control">
-                    @(Model.ProjId!=0 ? "Update" : "Create")
+                    @(Model.ProjectId!=0 ? "Update" : "Create")
                 </button>
             </div>
             <div class="col-3">

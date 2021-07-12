@@ -33,7 +33,7 @@ namespace PalRaiserMVC.Controllers
                 return View(Project);
             }
             //update
-            Project = _db.Projects.FirstOrDefault(u => u.ProjId == id);
+            Project = _db.Projects.FirstOrDefault(u => u.ProjectId == id);
             if (Project == null)
             {
                 return NotFound();
@@ -47,7 +47,7 @@ namespace PalRaiserMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Project.ProjId == 0)
+                if (Project.ProjectId == 0)
                 {
                     //create
                     _db.Projects.Add(Project);
@@ -71,7 +71,7 @@ namespace PalRaiserMVC.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            var projectFromDB = await _db.Projects.FirstOrDefaultAsync(u => u.ProjId == id);
+            var projectFromDB = await _db.Projects.FirstOrDefaultAsync(u => u.ProjectId == id);
             if (projectFromDB == null)
             {
                 return Json(new { success = false, message = "Error while deleting." });
