@@ -23,7 +23,5 @@ namespace PalRaiserMVC.Models
         public string ReplyBody { get; set; }
 
         public DateTimeOffset Date { get; set; }
-
-        public virtual ICollection<TopicReplyRating> Ratings { get; set; }
     }
 }

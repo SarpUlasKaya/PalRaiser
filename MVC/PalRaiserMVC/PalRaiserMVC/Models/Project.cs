@@ -34,6 +34,5 @@ namespace PalRaiserMVC.Models
         public virtual ICollection<Update> Updates { get; set; }
         public virtual ICollection<Report> Reports { get; set; }
         public virtual ICollection<Topic> Topics { get; set; }
-        public virtual ICollection<ProjectRating> Ratings { get; set; }
     }
 }

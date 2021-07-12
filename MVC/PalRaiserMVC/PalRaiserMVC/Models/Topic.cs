@@ -29,6 +29,5 @@ namespace PalRaiserMVC.Models
         public int NoOfReplies { get; set; }
 
         public virtual ICollection<TopicReply> Replies { get; set; }
-        public virtual ICollection<TopicRating> Ratings { get; set; }
     }
 }

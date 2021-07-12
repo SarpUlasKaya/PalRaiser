@@ -29,12 +29,7 @@ namespace PalRaiserMVC.Models
         public virtual ICollection<Report> Reports { get; set; }
         public virtual ICollection<Topic> TopicsCreated { get; set; }
         public virtual ICollection<TopicReply> TopicReplies { get; set; }
-        public virtual ICollection<ProjectRating> ProjectRatings { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<TopicRating> TopicRatings { get; set; }
-        public virtual ICollection<TopicReplyRating> TopicReplyRatings { get; set; }
-        public virtual ICollection<PostRating> PostRatings { get; set; }
-        public virtual ICollection<CommentRating> CommentRatings { get; set; }
     }
 }

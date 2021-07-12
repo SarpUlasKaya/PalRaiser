@@ -267,6 +267,41 @@ namespace PalRaiserMVC.Migrations
                     b.ToTable("AppUser");
                 });
 
+            modelBuilder.Entity("PalRaiserMVC.Models.Comment", b =>
+                {
+                    b.Property<int>("CommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CommentorId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("Date")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("DislikeCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LikeCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CommentId");
+
+                    b.HasIndex("CommentorId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Comment");
+                });
+
             modelBuilder.Entity("PalRaiserMVC.Models.Goal", b =>
                 {
                     b.Property<int>("GoalId")
@@ -292,6 +327,39 @@ namespace PalRaiserMVC.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("Goal");
+                });
+
+            modelBuilder.Entity("PalRaiserMVC.Models.Post", b =>
+                {
+                    b.Property<int>("PostId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CommentCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("Date")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("DislikeCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LikeCount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PublisherId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PostId");
+
+                    b.HasIndex("PublisherId");
+
+                    b.ToTable("Post");
                 });
 
             modelBuilder.Entity("PalRaiserMVC.Models.Project", b =>
@@ -349,7 +417,7 @@ namespace PalRaiserMVC.Migrations
                     b.Property<DateTimeOffset>("Date")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<int?>("ProjectId")
+                    b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
                     b.Property<string>("Reason")
@@ -384,7 +452,7 @@ namespace PalRaiserMVC.Migrations
                     b.Property<int>("NoOfReplies")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProjectId")
+                    b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
                     b.Property<string>("TopicBody")
@@ -520,6 +588,23 @@ namespace PalRaiserMVC.Migrations
                     b.Navigation("AppUser");
                 });
 
+            modelBuilder.Entity("PalRaiserMVC.Models.Comment", b =>
+                {
+                    b.HasOne("PalRaiserMVC.Models.AppUser", "Commentor")
+                        .WithMany("Comments")
+                        .HasForeignKey("CommentorId");
+
+                    b.HasOne("PalRaiserMVC.Models.Post", "Post")
+                        .WithMany("Comments")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Commentor");
+
+                    b.Navigation("Post");
+                });
+
             modelBuilder.Entity("PalRaiserMVC.Models.Goal", b =>
                 {
                     b.HasOne("PalRaiserMVC.Models.Project", "Project")
@@ -529,6 +614,15 @@ namespace PalRaiserMVC.Migrations
                         .IsRequired();
 
                     b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("PalRaiserMVC.Models.Post", b =>
+                {
+                    b.HasOne("PalRaiserMVC.Models.AppUser", "Publisher")
+                        .WithMany("Posts")
+                        .HasForeignKey("PublisherId");
+
+                    b.Navigation("Publisher");
                 });
 
             modelBuilder.Entity("PalRaiserMVC.Models.Project", b =>
@@ -544,7 +638,9 @@ namespace PalRaiserMVC.Migrations
                 {
                     b.HasOne("PalRaiserMVC.Models.Project", "Project")
                         .WithMany("Reports")
-                        .HasForeignKey("ProjectId");
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PalRaiserMVC.Models.AppUser", "User")
                         .WithMany("Reports")
@@ -562,8 +658,10 @@ namespace PalRaiserMVC.Migrations
                         .HasForeignKey("CreatorId");
 
                     b.HasOne("PalRaiserMVC.Models.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId");
+                        .WithMany("Topics")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Creator");
 
@@ -573,7 +671,7 @@ namespace PalRaiserMVC.Migrations
             modelBuilder.Entity("PalRaiserMVC.Models.TopicReply", b =>
                 {
                     b.HasOne("PalRaiserMVC.Models.Topic", "Topic")
-                        .WithMany()
+                        .WithMany("Replies")
                         .HasForeignKey("TopicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -600,6 +698,10 @@ namespace PalRaiserMVC.Migrations
 
             modelBuilder.Entity("PalRaiserMVC.Models.AppUser", b =>
                 {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Posts");
+
                     b.Navigation("PublishedProjects");
 
                     b.Navigation("Reports");
@@ -609,13 +711,25 @@ namespace PalRaiserMVC.Migrations
                     b.Navigation("TopicsCreated");
                 });
 
+            modelBuilder.Entity("PalRaiserMVC.Models.Post", b =>
+                {
+                    b.Navigation("Comments");
+                });
+
             modelBuilder.Entity("PalRaiserMVC.Models.Project", b =>
                 {
                     b.Navigation("Goals");
 
                     b.Navigation("Reports");
 
+                    b.Navigation("Topics");
+
                     b.Navigation("Updates");
+                });
+
+            modelBuilder.Entity("PalRaiserMVC.Models.Topic", b =>
+                {
+                    b.Navigation("Replies");
                 });
 #pragma warning restore 612, 618
         }
