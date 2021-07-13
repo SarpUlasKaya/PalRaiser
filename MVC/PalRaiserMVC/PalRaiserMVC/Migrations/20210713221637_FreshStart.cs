@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PalRaiserMVC.Migrations
 {
-    public partial class TryAgain : Migration
+    public partial class FreshStart : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AppUser",
+                name: "AppUsers",
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
@@ -24,7 +24,7 @@ namespace PalRaiserMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppUser", x => x.UserId);
+                    table.PrimaryKey("PK_AppUsers", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,15 +68,38 @@ namespace PalRaiserMVC.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_AppUser_AppUserUserId",
+                        name: "FK_AspNetUsers_AppUsers_AppUserUserId",
                         column: x => x.AppUserUserId,
-                        principalTable: "AppUser",
+                        principalTable: "AppUsers",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Post",
+                name: "FollowRequests",
+                columns: table => new
+                {
+                    SenderId = table.Column<int>(type: "int", nullable: false),
+                    ReceiverId = table.Column<int>(type: "int", nullable: false),
+                    IsAccepted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FollowRequests", x => new { x.SenderId, x.ReceiverId });
+                    table.ForeignKey(
+                        name: "FK_FollowRequests_AppUsers_ReceiverId",
+                        column: x => x.ReceiverId,
+                        principalTable: "AppUsers",
+                        principalColumn: "UserId");
+                    table.ForeignKey(
+                        name: "FK_FollowRequests_AppUsers_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "AppUsers",
+                        principalColumn: "UserId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Posts",
                 columns: table => new
                 {
                     PostId = table.Column<int>(type: "int", nullable: false)
@@ -90,17 +113,17 @@ namespace PalRaiserMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Post", x => x.PostId);
+                    table.PrimaryKey("PK_Posts", x => x.PostId);
                     table.ForeignKey(
-                        name: "FK_Post_AppUser_PublisherId",
+                        name: "FK_Posts_AppUsers_PublisherId",
                         column: x => x.PublisherId,
-                        principalTable: "AppUser",
+                        principalTable: "AppUsers",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Project",
+                name: "Projects",
                 columns: table => new
                 {
                     ProjectId = table.Column<int>(type: "int", nullable: false)
@@ -117,11 +140,11 @@ namespace PalRaiserMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Project", x => x.ProjectId);
+                    table.PrimaryKey("PK_Projects", x => x.ProjectId);
                     table.ForeignKey(
-                        name: "FK_Project_AppUser_PublisherId",
+                        name: "FK_Projects_AppUsers_PublisherId",
                         column: x => x.PublisherId,
-                        principalTable: "AppUser",
+                        principalTable: "AppUsers",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -233,13 +256,12 @@ namespace PalRaiserMVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comment",
+                name: "Comments",
                 columns: table => new
                 {
-                    CommentId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CommentorId = table.Column<int>(type: "int", nullable: true),
+                    CommentId = table.Column<int>(type: "int", nullable: false),
                     PostId = table.Column<int>(type: "int", nullable: false),
+                    CommentorId = table.Column<int>(type: "int", nullable: true),
                     Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Date = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     LikeCount = table.Column<int>(type: "int", nullable: false),
@@ -247,27 +269,51 @@ namespace PalRaiserMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comment", x => x.CommentId);
+                    table.PrimaryKey("PK_Comments", x => new { x.CommentId, x.PostId });
                     table.ForeignKey(
-                        name: "FK_Comment_AppUser_CommentorId",
+                        name: "FK_Comments_AppUsers_CommentorId",
                         column: x => x.CommentorId,
-                        principalTable: "AppUser",
+                        principalTable: "AppUsers",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Comment_Post_PostId",
+                        name: "FK_Comments_Posts_PostId",
                         column: x => x.PostId,
-                        principalTable: "Post",
+                        principalTable: "Posts",
                         principalColumn: "PostId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Goal",
+                name: "PostRatings",
                 columns: table => new
                 {
-                    GoalId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    PostId = table.Column<int>(type: "int", nullable: false),
+                    IsLike = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostRatings", x => new { x.UserId, x.PostId });
+                    table.ForeignKey(
+                        name: "FK_PostRatings_AppUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AppUsers",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PostRatings_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "PostId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Goals",
+                columns: table => new
+                {
+                    GoalId = table.Column<int>(type: "int", nullable: false),
                     ProjectId = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -275,17 +321,42 @@ namespace PalRaiserMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Goal", x => x.GoalId);
+                    table.PrimaryKey("PK_Goals", x => new { x.GoalId, x.ProjectId });
                     table.ForeignKey(
-                        name: "FK_Goal_Project_ProjectId",
+                        name: "FK_Goals_Projects_ProjectId",
                         column: x => x.ProjectId,
-                        principalTable: "Project",
+                        principalTable: "Projects",
                         principalColumn: "ProjectId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Report",
+                name: "ProjectRatings",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ProjectId = table.Column<int>(type: "int", nullable: false),
+                    IsLike = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectRatings", x => new { x.UserId, x.ProjectId });
+                    table.ForeignKey(
+                        name: "FK_ProjectRatings_AppUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AppUsers",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProjectRatings_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "ProjectId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reports",
                 columns: table => new
                 {
                     ReportId = table.Column<int>(type: "int", nullable: false)
@@ -297,23 +368,23 @@ namespace PalRaiserMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Report", x => x.ReportId);
+                    table.PrimaryKey("PK_Reports", x => x.ReportId);
                     table.ForeignKey(
-                        name: "FK_Report_AppUser_UserId",
+                        name: "FK_Reports_AppUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "AppUser",
+                        principalTable: "AppUsers",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Report_Project_ProjectId",
+                        name: "FK_Reports_Projects_ProjectId",
                         column: x => x.ProjectId,
-                        principalTable: "Project",
+                        principalTable: "Projects",
                         principalColumn: "ProjectId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Topic",
+                name: "Topics",
                 columns: table => new
                 {
                     TopicId = table.Column<int>(type: "int", nullable: false)
@@ -327,27 +398,26 @@ namespace PalRaiserMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Topic", x => x.TopicId);
+                    table.PrimaryKey("PK_Topics", x => x.TopicId);
                     table.ForeignKey(
-                        name: "FK_Topic_AppUser_CreatorId",
+                        name: "FK_Topics_AppUsers_CreatorId",
                         column: x => x.CreatorId,
-                        principalTable: "AppUser",
+                        principalTable: "AppUsers",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Topic_Project_ProjectId",
+                        name: "FK_Topics_Projects_ProjectId",
                         column: x => x.ProjectId,
-                        principalTable: "Project",
+                        principalTable: "Projects",
                         principalColumn: "ProjectId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Update",
+                name: "Updates",
                 columns: table => new
                 {
-                    UpdateId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UpdateId = table.Column<int>(type: "int", nullable: false),
                     ProjectId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -355,21 +425,73 @@ namespace PalRaiserMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Update", x => x.UpdateId);
+                    table.PrimaryKey("PK_Updates", x => new { x.UpdateId, x.ProjectId });
                     table.ForeignKey(
-                        name: "FK_Update_Project_ProjectId",
+                        name: "FK_Updates_Projects_ProjectId",
                         column: x => x.ProjectId,
-                        principalTable: "Project",
+                        principalTable: "Projects",
                         principalColumn: "ProjectId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TopicReply",
+                name: "CommentRatings",
                 columns: table => new
                 {
-                    TopicReplyId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    CommentId = table.Column<int>(type: "int", nullable: false),
+                    PostId = table.Column<int>(type: "int", nullable: false),
+                    CommentId1 = table.Column<int>(type: "int", nullable: false),
+                    CommentPostId = table.Column<int>(type: "int", nullable: false),
+                    IsLike = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CommentRatings", x => new { x.UserId, x.CommentId, x.PostId });
+                    table.ForeignKey(
+                        name: "FK_CommentRatings_AppUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AppUsers",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CommentRatings_Comments_CommentId1_CommentPostId",
+                        columns: x => new { x.CommentId1, x.CommentPostId },
+                        principalTable: "Comments",
+                        principalColumns: new[] { "CommentId", "PostId" },
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TopicRatings",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    TopicId = table.Column<int>(type: "int", nullable: false),
+                    IsLike = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TopicRatings", x => new { x.UserId, x.TopicId });
+                    table.ForeignKey(
+                        name: "FK_TopicRatings_AppUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AppUsers",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TopicRatings_Topics_TopicId",
+                        column: x => x.TopicId,
+                        principalTable: "Topics",
+                        principalColumn: "TopicId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TopicReplies",
+                columns: table => new
+                {
+                    TopicReplyId = table.Column<int>(type: "int", nullable: false),
                     TopicId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     ReplyBody = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -377,18 +499,46 @@ namespace PalRaiserMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TopicReply", x => x.TopicReplyId);
+                    table.PrimaryKey("PK_TopicReplies", x => new { x.TopicReplyId, x.TopicId });
                     table.ForeignKey(
-                        name: "FK_TopicReply_AppUser_UserId",
+                        name: "FK_TopicReplies_AppUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "AppUser",
+                        principalTable: "AppUsers",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_TopicReply_Topic_TopicId",
+                        name: "FK_TopicReplies_Topics_TopicId",
                         column: x => x.TopicId,
-                        principalTable: "Topic",
+                        principalTable: "Topics",
                         principalColumn: "TopicId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TopicReplyRatings",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    TopicReplyId = table.Column<int>(type: "int", nullable: false),
+                    TopicId = table.Column<int>(type: "int", nullable: false),
+                    TopicReplyId1 = table.Column<int>(type: "int", nullable: false),
+                    TopicReplyTopicId = table.Column<int>(type: "int", nullable: false),
+                    IsLike = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TopicReplyRatings", x => new { x.UserId, x.TopicReplyId, x.TopicId });
+                    table.ForeignKey(
+                        name: "FK_TopicReplyRatings_AppUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AppUsers",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TopicReplyRatings_TopicReplies_TopicReplyId1_TopicReplyTopicId",
+                        columns: x => new { x.TopicReplyId1, x.TopicReplyTopicId },
+                        principalTable: "TopicReplies",
+                        principalColumns: new[] { "TopicReplyId", "TopicId" },
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -437,63 +587,93 @@ namespace PalRaiserMVC.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_CommentorId",
-                table: "Comment",
+                name: "IX_CommentRatings_CommentId1_CommentPostId",
+                table: "CommentRatings",
+                columns: new[] { "CommentId1", "CommentPostId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_CommentorId",
+                table: "Comments",
                 column: "CommentorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_PostId",
-                table: "Comment",
+                name: "IX_Comments_PostId",
+                table: "Comments",
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Goal_ProjectId",
-                table: "Goal",
+                name: "IX_FollowRequests_ReceiverId",
+                table: "FollowRequests",
+                column: "ReceiverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Goals_ProjectId",
+                table: "Goals",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Post_PublisherId",
-                table: "Post",
+                name: "IX_PostRatings_PostId",
+                table: "PostRatings",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Posts_PublisherId",
+                table: "Posts",
                 column: "PublisherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Project_PublisherId",
-                table: "Project",
-                column: "PublisherId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Report_ProjectId",
-                table: "Report",
+                name: "IX_ProjectRatings_ProjectId",
+                table: "ProjectRatings",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Report_UserId",
-                table: "Report",
+                name: "IX_Projects_PublisherId",
+                table: "Projects",
+                column: "PublisherId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reports_ProjectId",
+                table: "Reports",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reports_UserId",
+                table: "Reports",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Topic_CreatorId",
-                table: "Topic",
-                column: "CreatorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Topic_ProjectId",
-                table: "Topic",
-                column: "ProjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TopicReply_TopicId",
-                table: "TopicReply",
+                name: "IX_TopicRatings_TopicId",
+                table: "TopicRatings",
                 column: "TopicId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TopicReply_UserId",
-                table: "TopicReply",
+                name: "IX_TopicReplies_TopicId",
+                table: "TopicReplies",
+                column: "TopicId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TopicReplies_UserId",
+                table: "TopicReplies",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Update_ProjectId",
-                table: "Update",
+                name: "IX_TopicReplyRatings_TopicReplyId1_TopicReplyTopicId",
+                table: "TopicReplyRatings",
+                columns: new[] { "TopicReplyId1", "TopicReplyTopicId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Topics_CreatorId",
+                table: "Topics",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Topics_ProjectId",
+                table: "Topics",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Updates_ProjectId",
+                table: "Updates",
                 column: "ProjectId");
         }
 
@@ -515,19 +695,31 @@ namespace PalRaiserMVC.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Comment");
+                name: "CommentRatings");
 
             migrationBuilder.DropTable(
-                name: "Goal");
+                name: "FollowRequests");
 
             migrationBuilder.DropTable(
-                name: "Report");
+                name: "Goals");
 
             migrationBuilder.DropTable(
-                name: "TopicReply");
+                name: "PostRatings");
 
             migrationBuilder.DropTable(
-                name: "Update");
+                name: "ProjectRatings");
+
+            migrationBuilder.DropTable(
+                name: "Reports");
+
+            migrationBuilder.DropTable(
+                name: "TopicRatings");
+
+            migrationBuilder.DropTable(
+                name: "TopicReplyRatings");
+
+            migrationBuilder.DropTable(
+                name: "Updates");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -536,16 +728,22 @@ namespace PalRaiserMVC.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Post");
+                name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "Topic");
+                name: "TopicReplies");
 
             migrationBuilder.DropTable(
-                name: "Project");
+                name: "Posts");
 
             migrationBuilder.DropTable(
-                name: "AppUser");
+                name: "Topics");
+
+            migrationBuilder.DropTable(
+                name: "Projects");
+
+            migrationBuilder.DropTable(
+                name: "AppUsers");
         }
     }
 }

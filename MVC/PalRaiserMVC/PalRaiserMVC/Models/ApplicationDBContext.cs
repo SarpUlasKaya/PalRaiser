@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace PalRaiserMVC.Models
 {
-    public class ApplicationDBContext : DbContext
+    public class ApplicationDBContext : IdentityDbContext<AuthUser>
     {
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
             builder.Entity<TopicReply>().HasKey(reply => new { reply.TopicReplyId, reply.TopicId });
             builder.Entity<Goal>().HasKey(goal => new { goal.GoalId, goal.ProjectId });
             builder.Entity<Update>().HasKey(update => new { update.UpdateId, update.ProjectId });
@@ -24,7 +25,6 @@ namespace PalRaiserMVC.Models
             builder.Entity<TopicReplyRating>().HasKey(topicReplyRating => new { topicReplyRating.UserId, topicReplyRating.TopicReplyId, topicReplyRating.TopicId });
             builder.Entity<FollowRequest>().HasKey(followRequest => new { followRequest.SenderId, followRequest.ReceiverId });
             builder.Entity<CommentRating>().HasKey(commRating => new { commRating.UserId, commRating.CommentId, commRating.PostId });
-            base.OnModelCreating(builder);
         }
         public DbSet<Project> Projects { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }

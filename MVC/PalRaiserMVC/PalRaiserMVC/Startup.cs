@@ -6,8 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PalRaiserMVC.Areas.Identity.Data;
-using PalRaiserMVC.Data;
 using PalRaiserMVC.Models;
 using System;
 using System.Collections.Generic;
@@ -36,11 +34,11 @@ namespace PalRaiserMVC
             //    .AddEntityFrameworkStores<AuthDBContext>()
             //    .AddDefaultTokenProviders();
 
-            services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))); //connection string
+            //services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))); //connection string
             
             services.AddControllersWithViews().AddRazorRuntimeCompilation(); //brings in support for working with MVC in .Net Core
             services.AddRazorPages();
-            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDBContext>();
+            //services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDBContext>();
 
             //CHECK LATER
             //services.AddScoped<Repository>();
