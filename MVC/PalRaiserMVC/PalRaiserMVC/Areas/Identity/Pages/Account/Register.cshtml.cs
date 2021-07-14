@@ -76,10 +76,10 @@ namespace PalRaiserMVC.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Required]
-            //[Range(100000000000000, 9999999999999999, ErrorMessage = "Your credit card number must be 15 or 16 digits long")]
+            [Range(100000000000000, 9999999999999999, ErrorMessage = "Your credit card number must be 15 or 16 digits long")]
             //[DataType(DataType.CreditCard)]
             [Display(Name = "Credit Card No")]
-            public int CreditCardNo { get; set; }
+            public long CreditCardNo { get; set; }
 
             [Required]
             [Range(100, 9999, ErrorMessage = "Your card security code must be 15 or 16 digits long")]
@@ -90,6 +90,14 @@ namespace PalRaiserMVC.Areas.Identity.Pages.Account
             [DataType(DataType.Date)]
             [Display(Name = "Card Expiry Date")]
             public DateTime CardExpiryDate { get; set; }
+
+            [DataType(DataType.Text)]
+            [Display(Name = "Gender")]
+            public string Gender { get; set; }
+
+            [DataType(DataType.Date)]
+            [Display(Name = "Birthday")]
+            public DateTime Birthday { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -105,7 +113,8 @@ namespace PalRaiserMVC.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var appUser = new AppUser { UserName = Input.FirstName + " " + Input.LastName,
-                    CardNumber = Input.CreditCardNo, CardSecNo = Input.CardSecurityNo, CardExpDate = Input.CardExpiryDate };
+                    CardNumber = Input.CreditCardNo, CardSecNo = Input.CardSecurityNo, CardExpDate = Input.CardExpiryDate,
+                    LastLogin = DateTimeOffset.Now, CreatedAt = DateTimeOffset.Now, Gender = Input.Gender, Birthday = Input.Birthday };
                 var user = new AuthUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName,
                     LastName = Input.LastName, AppUser = appUser };
                 var result = await _userManager.CreateAsync(user, Input.Password);

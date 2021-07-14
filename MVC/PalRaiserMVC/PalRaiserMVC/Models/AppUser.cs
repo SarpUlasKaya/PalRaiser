@@ -14,7 +14,7 @@ namespace PalRaiserMVC.Models
         [Required]
         public string UserName { get; set; }
         [Required]
-        public int CardNumber { get; set; }
+        public long CardNumber { get; set; }
         [Required]
         public int CardSecNo { get; set; }
         [Required]
@@ -22,7 +22,7 @@ namespace PalRaiserMVC.Models
 
         public DateTimeOffset LastLogin { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
         public string Gender { get; set; }
 
         public virtual ICollection<Project> PublishedProjects { get; set; }
