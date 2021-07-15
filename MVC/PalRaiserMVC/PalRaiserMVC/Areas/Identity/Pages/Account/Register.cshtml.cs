@@ -127,7 +127,7 @@ namespace PalRaiserMVC.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _db.AppUsers.Add(appUser);
-                    HttpContext.Session.SetInt32("_currentUser", appUser.UserId);
+                    HttpContext.Session.SetInt32("currentUser", appUser.UserId);
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
