@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PalRaiserMVC.Models;
 using System;
@@ -50,6 +51,7 @@ namespace PalRaiserMVC.Controllers
                 if (Project.ProjectId == 0)
                 {
                     //create
+                    Project.Publisher = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("_currentUser"));
                     _db.Projects.Add(Project);
                 } else
                 {

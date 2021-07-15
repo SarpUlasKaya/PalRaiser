@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using PalRaiserMVC.Models;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace PalRaiserMVC.Areas.Identity.Pages.Account
 {
@@ -60,6 +62,11 @@ namespace PalRaiserMVC.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                Response.Redirect("/");
+            }
+
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
@@ -86,9 +93,12 @@ namespace PalRaiserMVC.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var user = await _signInManager.UserManager.FindByNameAsync(Input.Email);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    AppUser appUser = _db.AppUsers.FirstOrDefault(u => u.AuthUser.Id == user.Id);
+                    HttpContext.Session.SetInt32("_currentUser", appUser.UserId);
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

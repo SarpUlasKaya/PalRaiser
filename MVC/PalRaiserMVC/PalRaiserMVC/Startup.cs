@@ -38,12 +38,19 @@ namespace PalRaiserMVC
             
             services.AddControllersWithViews().AddRazorRuntimeCompilation(); //brings in support for working with MVC in .Net Core
             services.AddRazorPages();
+
+            services.AddHttpContextAccessor();
+
             //services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDBContext>();
 
-            //CHECK LATER
-            //services.AddScoped<Repository>();
-            //services.AddHttpContextAccessor();
-            //services.AddSession(); // brings in session capability
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,10 +70,11 @@ namespace PalRaiserMVC
             app.UseStaticFiles();
 
             app.UseRouting();
-            //app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
