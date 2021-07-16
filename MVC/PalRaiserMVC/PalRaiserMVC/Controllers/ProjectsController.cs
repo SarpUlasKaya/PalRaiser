@@ -25,6 +25,17 @@ namespace PalRaiserMVC.Controllers
             return View();
         }
 
+        public IActionResult ViewProj(int? id)
+        {
+            Project = _db.Projects.FirstOrDefault(u => u.ProjectId == id);
+            if (Project == null)
+            {
+                return NotFound();
+            }
+            //Session["username"] = ;
+            return View(Project);
+        }
+
         public IActionResult UpsertProj(int? id)
         {
             Project = new Project();
@@ -51,8 +62,10 @@ namespace PalRaiserMVC.Controllers
                 if (Project.ProjectId == 0)
                 {
                     //create
-                    Project.Publisher = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("_currentUser"));
                     _db.Projects.Add(Project);
+                    Project.Publisher = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("_currentUser"));
+                    Project.Updates.Add(new Update { Title = Project.ProjName + " is now on PalRaiser!", Description = "Support the creators of " +
+                        Project.ProjName + " by funding them on PalRaiser! You have the power to help someone reach their dreams.", Date = DateTimeOffset.Now } );
                 } else
                 {
                     _db.Projects.Update(Project);

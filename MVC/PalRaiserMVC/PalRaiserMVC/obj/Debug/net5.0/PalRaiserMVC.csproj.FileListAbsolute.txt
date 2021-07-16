@@ -443,3 +443,6 @@ C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_AuthLayout.cshtml.g.cs
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\PalRaiserMVC.csproj.AssemblyReference.cache
+C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\AppUsers\Index.cshtml.g.cs
+C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\AppUsers\ViewProfile.cshtml.g.cs
+C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\Projects\ViewProj.cshtml.g.cs

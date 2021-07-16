@@ -16,7 +16,7 @@ namespace PalRaiserMVC.Models
         public int ProjectId { get; set; }
 
         [Required]
-        public int Title { get; set; }
+        public string Title { get; set; }
         [Required]
         public string Description { get; set; }
 

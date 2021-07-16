@@ -43,6 +43,7 @@ namespace PalRaiserMVC.Controllers
             return Json(new { data = await _db.AppUsers.ToListAsync() });
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetUserProjects(int id)
         {
             AppUser = _db.AppUsers.FirstOrDefault(u => u.UserId == id);
