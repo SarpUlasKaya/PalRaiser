@@ -12,16 +12,17 @@ function loadDataTable() {
             "datatype": "json"
         },
         "columns": [
-            { "data": "userName", "width": "12%" },
-            { "data": "createdAt", "width": "12%" },
-            { "data": "lastLogin", "width": "12%" },
-            { "data": "gender", "width": "12%" },
-            { "data": "birthday", "width": "12%" },
+            { "data": "userId", "width": "10%" },
+            { "data": "userName", "width": "10%" },
+            { "data": "createdAt", "width": "10%" },
+            { "data": "lastLogin", "width": "10%" },
+            { "data": "gender", "width": "10%" },
+            { "data": "birthday", "width": "10%" },
             {
-                "data": "projectId",
+                "data": "userId",
                 "render": function (data) {
                     return `<div class="text-center">
-                            <a href="/Projects/ViewProfile?id=${data}" class='btn btn-success text-white' style='cursor:pointer; width:70px;'>
+                            <a href="/AppUsers/ViewProfile?id=${data}" class='btn btn-success text-white' style='cursor:pointer; width:70px;'>
                                 View Profile
                             </a>`;
                 }, "width": "40%"

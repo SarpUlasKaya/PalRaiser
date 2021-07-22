@@ -14,7 +14,6 @@ function loadDataTable() {
         "columns": [
             { "data": "projName", "width": "10%" },
             { "data": "type", "width": "10%" },
-            { "data": "publisher.userName", "width": "10%" },
             { "data": "amountRaised", "width": "10%" },
             { "data": "likeCount", "width": "10%" },
             { "data": "dislikeCount", "width": "10%" },
@@ -32,7 +31,7 @@ function loadDataTable() {
                                 Delete
                             </a>
                            </div>`;
-                }, "width": "30%"
+                }, "width": "40%"
             }
         ],
         "language": {

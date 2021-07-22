@@ -62,10 +62,19 @@ namespace PalRaiserMVC.Controllers
                 if (Project.ProjectId == 0)
                 {
                     //create
+                    Project.Publisher = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser"));
                     _db.Projects.Add(Project);
-                    Project.Publisher = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("_currentUser"));
-                    Project.Updates.Add(new Update { Title = Project.ProjName + " is now on PalRaiser!", Description = "Support the creators of " +
-                        Project.ProjName + " by funding them on PalRaiser! You have the power to help someone reach their dreams.", Date = DateTimeOffset.Now } );
+                    var update = new Update
+                    {
+                        Title = Project.ProjName + " is now on PalRaiser!",
+                        Description = "Support the creators of " +
+                        Project.ProjName + " by funding them on PalRaiser! You have the power to help someone reach their dreams.",
+                        Date = DateTimeOffset.Now,
+                        Project = Project
+                    };
+                    _db.Updates.Add(update);
+                    //Project.Updates.Add(new Update { Title = Project.ProjName + " is now on PalRaiser!", Description = "Support the creators of " +
+                    //    Project.ProjName + " by funding them on PalRaiser! You have the power to help someone reach their dreams.", Date = DateTimeOffset.Now } );
                 } else
                 {
                     _db.Projects.Update(Project);
@@ -80,7 +89,8 @@ namespace PalRaiserMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Json(new { data = await _db.Projects.ToListAsync() });
+            var projects = await _db.Projects.ToListAsync();
+            return Json(new { data = projects });
         }
 
         [HttpDelete]
