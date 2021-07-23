@@ -10,6 +10,7 @@ using PalRaiserMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace PalRaiserMVC
@@ -36,7 +37,9 @@ namespace PalRaiserMVC
 
             //services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))); //connection string
             
-            services.AddControllersWithViews().AddRazorRuntimeCompilation(); //brings in support for working with MVC in .Net Core
+            services.AddControllersWithViews().AddRazorRuntimeCompilation().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            ); //brings in support for working with MVC in .Net Core
             services.AddRazorPages();
 
             services.AddHttpContextAccessor();
@@ -51,6 +54,9 @@ namespace PalRaiserMVC
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+
+            //services.AddControllers().AddJsonOptions(x =>
+            //    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

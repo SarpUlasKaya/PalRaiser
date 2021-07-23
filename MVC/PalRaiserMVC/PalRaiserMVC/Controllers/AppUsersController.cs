@@ -44,9 +44,9 @@ namespace PalRaiserMVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUserProjects(int id)
+        public async Task<IActionResult> GetUserProjects()
         {
-            AppUser = _db.AppUsers.FirstOrDefault(u => u.UserId == id);
+            AppUser = _db.AppUsers.FirstOrDefault(u => u.UserId == 1006);
             if (AppUser == null)
             {
                 return NotFound();
