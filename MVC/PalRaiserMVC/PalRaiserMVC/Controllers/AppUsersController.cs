@@ -46,7 +46,7 @@ namespace PalRaiserMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUserProjects()
         {
-            AppUser = _db.AppUsers.FirstOrDefault(u => u.UserId == 1006);
+            AppUser = _db.AppUsers.FirstOrDefault(u => u.UserId == 1);
             if (AppUser == null)
             {
                 return NotFound();
@@ -54,18 +54,18 @@ namespace PalRaiserMVC.Controllers
             return Json(new { data = await _db.Projects.Where(v => v.Publisher == AppUser).ToListAsync() });
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var projectFromDB = await _db.Projects.FirstOrDefaultAsync(u => u.ProjectId == id);
-            if (projectFromDB == null)
-            {
-                return Json(new { success = false, message = "Error while deleting." });
-            }
-            _db.Projects.Remove(projectFromDB);
-            await _db.SaveChangesAsync();
-            return Json(new { success = true, message = "Deletion successful" });
-        }
+        //[HttpDelete]
+        //public async Task<IActionResult> Delete(int id)
+        //{
+        //    var projectFromDB = await _db.Projects.FirstOrDefaultAsync(u => u.ProjectId == id);
+        //    if (projectFromDB == null)
+        //    {
+        //        return Json(new { success = false, message = "Error while deleting." });
+        //    }
+        //    _db.Projects.Remove(projectFromDB);
+        //    await _db.SaveChangesAsync();
+        //    return Json(new { success = true, message = "Deletion successful" });
+        //}
         #endregion
     }
 }

@@ -1,9 +1,26 @@
-﻿@model PalRaiserMVC.Models.Project
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model PalRaiserMVC.Models.Project
 
 <h2 class="text-info">@(Model.ProjName)</h2>
 <br />
 
 <div class="border container" style="padding:30px;">
+    @if (@HttpContextAccessor.HttpContext.Session.GetInt32("canEdit") == 1)
+    {
+        <div class="form-group row">
+            <div class="col-3">
+
+            </div>
+            <div class="col-3">
+                <a asp-page="UpsertProj" asp-route-id="@Model.ProjectId" class="btn btn-success btn-sm text-white">Edit</a>
+            </div>
+            <div class="col-3">
+                <button asp-page-handler="Delete" asp-route-id="@Model.ProjectId" class="btn btn-danger btn-sm">Delete</button>
+            </div>
+        </div>
+    }
+
     <div class="form-group row">
         <div class="col-3">
             <label asp-for="Type">Type:</label>
@@ -39,11 +56,33 @@
     </div>
 
     <div class="form-group row">
-        <div class="col-5">
-            @*Fund*@
+        <div class="col-3">
+            <a asp-area="" asp-controller="Goals" asp-action="Index" class="btn btn-success">
+                See Fundraiser Goals
+            </a>
         </div>
-        <div class="col-5">
-            @*Report*@
+        <div class="col-6">
+
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-3">
+            <a asp-area="" asp-controller="Reports" asp-action="Index" class="btn btn-danger">
+                See Reports (@(Model.ReportCount))
+            </a>
+        </div>
+        <div class="col-6">
+
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-3">
+            <a asp-area="" asp-controller="Updates" asp-action="Index" class="btn btn-danger">
+                See News and Updates
+            </a>
+        </div>
+        <div class="col-6">
+
         </div>
     </div>
 
@@ -56,54 +95,8 @@
         </div>
     </div>
 
-    <div class="col-12 border p-3 mt-3">
-        <form method="post">
-            @if (Model.Updates.Count() > 0)
-            {
-                <table class="table table-striped border">
-                    <tr class="table-secondary">
-                        <th>
-                            <label asp-for="Updates.FirstOrDefault().Title"> Update Title </label>
-                        </th>
-                        <th>
-                            @*@Html.DisplayNameFor(m=>m.Projects.FirstOrDefault().Summary)*@
-                            <label asp-for="Updates.FirstOrDefault().Date"> Date </label>
-                        </th>
-                        <th>
-                            <label asp-for="Updates.FirstOrDefault().Description"> Description </label>
-                        </th>
-                        <th>
-
-                        </th>
-                    </tr>
-                    @foreach (var item in Model.Updates)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(m => item.Title)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => item.Date)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => item.Description)
-                            </td>
-                            <td>
-                                @*<button asp-page-handler="Delete" asp-route-id="@item.ProjId" onclick="return confirm('Are you sure you want to delete this project?')" class="btn btn-danger btn-sm">Delete</button>
-                                    <a asp-page="EditProj" asp-route-id="@item.ProjId" class="btn btn-success btn-sm text-white">Edit</a>*@
-                            </td>
-                        </tr>
-                    }
-                </table>
-            }
-            else
-            {
-                <p>No updates found.</p>
-            }
-        </form>
-    </div>
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/DeleteItem.js"></script>
 }

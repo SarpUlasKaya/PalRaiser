@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Http;
-@using PalRaiserMVC.Models;
 @inject IHttpContextAccessor HttpContextAccessor
 
 <h2 class="text-info">Session Id: @HttpContextAccessor.HttpContext.Session.GetInt32("currentUser")</h2>

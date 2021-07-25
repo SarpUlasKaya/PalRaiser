@@ -1,0 +1,84 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model List<PalRaiserMVC.Models.Goal>
+
+<h2 class="text-info">List of Fundraiser Goals</h2>
+<br />
+
+<div class="border container" style="padding:30px;">
+    @if (@HttpContextAccessor.HttpContext.Session.GetInt32("canEdit") == 1)
+    {
+        <div class="col-6">
+
+        </div>
+        <div class="col-3 offset-3">
+            <a asp-action="UpsertGoal" asp-controller="Goals" class="btn btn-info form-control text-white">
+                Add New Fundraiser Goal
+            </a>
+        </div>
+    }
+    <div class="col-12 border p-3 mt-3">
+        <form method="post">
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-striped border">
+                    <tr class="table-secondary">
+                        <th>
+                            <label asp-for="FirstOrDefault().Amount"> Goal </label>
+                        </th>
+                        <th>
+                            <label asp-for="FirstOrDefault().Description"> Date </label>
+                        </th>
+                        <th>
+                            <label asp-for="FirstOrDefault().IsReached"> Reached? </label>
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        @if (item.ProjectId == @HttpContextAccessor.HttpContext.Session.GetInt32("currentProj"))
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(m => item.Amount)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.Description)
+                                </td>
+                                @if (item.Project.AmountRaised > item.Amount)
+                                {
+                                    <td>
+                                        Yes
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        No
+                                    </td>
+                                }
+                                @if (item.Project.Publisher.UserId == @HttpContextAccessor.HttpContext.Session.GetInt32("currentUser"))
+                                {
+                                    <td>
+                                        <button asp-page-handler="Delete" asp-route-id="@item.GoalId" class="btn btn-danger btn-sm">Delete</button>
+                                        <a asp-page="UpsertReport" asp-route-id="@item.GoalId" class="btn btn-success btn-sm text-white">Edit</a>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    }
+                </table>
+            }
+            else
+            {
+                <p>No goals found.</p>
+            }
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/DeleteItem.js"></script>
+}

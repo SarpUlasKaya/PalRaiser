@@ -449,3 +449,9 @@ C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
+C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\Goals\Index.cshtml.g.cs
+C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\Goals\UpsertGoal.cshtml.g.cs
+C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\Reports\Index.cshtml.g.cs
+C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\Reports\UpsertReport.cshtml.g.cs
+C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\Updates\Index.cshtml.g.cs
+C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\Updates\UpsertUpdate.cshtml.g.cs
