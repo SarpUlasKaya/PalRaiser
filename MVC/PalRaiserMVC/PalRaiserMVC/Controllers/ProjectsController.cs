@@ -90,6 +90,40 @@ namespace PalRaiserMVC.Controllers
             return View(Project);
         }
 
+        public IActionResult FundProj(int id)
+        {
+            Project = _db.Projects.FirstOrDefault(u => u.ProjectId == id);
+            if (Project == null)
+            {
+                return NotFound();
+            }
+            return View(Project);
+        }
+
+        public IActionResult AddFunds(int amount)
+        {
+            Project = _db.Projects.FirstOrDefault(u => u.ProjectId == HttpContext.Session.GetInt32("currentProj"));
+            if (Project == null)
+            {
+                return NotFound();
+            }
+            //Fund Project
+            Project.AmountRaised += amount;
+            _db.Projects.Update(Project);
+            _db.SaveChanges();
+            return RedirectToAction("FundsTransferred", new { id = HttpContext.Session.GetInt32("currentProj") });
+        }
+
+        public IActionResult FundsTransferred(int id)
+        {
+            Project = _db.Projects.FirstOrDefault(u => u.ProjectId == id);
+            if (Project == null)
+            {
+                return NotFound();
+            }
+            return View(Project);
+        }
+
         #region API Calls
         [HttpGet]
         public async Task<IActionResult> GetAll()

@@ -6,17 +6,26 @@
 <br />
 
 <div class="border container" style="padding:30px;">
-    @if (@HttpContextAccessor.HttpContext.Session.GetInt32("canEdit") == 1)
-    {
-        <div class="col-6">
+
+    <div class="form-group row">
+        <div class="col-3">
 
         </div>
-        <div class="col-3 offset-3">
-            <a asp-action="UpsertGoal" asp-controller="Goals" class="btn btn-info form-control text-white">
-                Add New Fundraiser Goal
+        <div class="col-3">
+            @if (@HttpContextAccessor.HttpContext.Session.GetInt32("canEdit") == 1)
+            {
+                <a asp-action="UpsertGoal" asp-controller="Goals" class="btn btn-info form-control text-white">
+                    Add New Fundraiser Goal
+                </a>
+            }
+        </div>
+        <div class="col-3">
+            <a asp-area="" asp-controller="Projects" asp-action="FundProj" asp-route-id="@HttpContextAccessor.HttpContext.Session.GetInt32("currentProj")" class="btn btn-success btn-sm text-white">
+                Fund Project
             </a>
         </div>
-    }
+    </div>
+
     <div class="col-12 border p-3 mt-3">
         <form method="post">
             @if (Model.Count() > 0)
