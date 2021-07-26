@@ -50,7 +50,7 @@ namespace PalRaiserMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Report.ProjectId == 0)
+                if (Report.ReportId == 0)
                 {
                     //create
                     Report.Project = _db.Projects.FirstOrDefault(p => p.ProjectId == HttpContext.Session.GetInt32("currentProj"));
@@ -61,6 +61,7 @@ namespace PalRaiserMVC.Controllers
                 }
                 else
                 {
+                    Report.Date = DateTimeOffset.Now;
                     _db.Reports.Update(Report);
                 }
                 _db.SaveChanges();

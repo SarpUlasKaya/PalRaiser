@@ -59,6 +59,7 @@ namespace PalRaiserMVC.Controllers
                     }
                 else
                 {
+                    Update.Date = DateTimeOffset.Now;
                     _db.Updates.Update(Update);
                 }
                 _db.SaveChanges();
