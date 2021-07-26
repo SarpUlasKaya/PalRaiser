@@ -22,7 +22,7 @@ namespace PalRaiserMVC.Controllers
 
         public IActionResult Index()
         {
-            List<Goal> goals = _db.Goals.ToList();
+            List<Goal> goals = _db.Goals.Include(g => g.Project).ToList();
 
             return View(goals);
         }

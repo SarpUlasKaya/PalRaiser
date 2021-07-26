@@ -2,7 +2,7 @@
 @inject IHttpContextAccessor HttpContextAccessor
 @model PalRaiserMVC.Models.Project
 
-<h2 class="text-info">@(Model.ProjName)</h2>
+<h2 class="text-info">@Html.DisplayFor(m => m.ProjName)</h2>
 <br />
 
 <div class="border container" style="padding:30px;">
@@ -13,10 +13,10 @@
 
             </div>
             <div class="col-3">
-                <a asp-page="UpsertProj" asp-route-id="@(Model.ProjectId)" class="btn btn-success btn-sm text-white">Edit</a>
+                <a asp-action="UpsertProj" asp-route-id="@Html.DisplayFor(m => m.ProjectId)" class="btn btn-success btn-sm text-white">Edit</a>
             </div>
             <div class="col-3">
-                <button asp-page-handler="Delete" asp-route-id="@(Model.ProjectId)" class="btn btn-danger btn-sm">Delete</button>
+                <button asp-action="Delete" asp-route-id="@Html.DisplayFor(m => m.ProjectId)" class="btn btn-danger btn-sm">Delete</button>
             </div>
         </div>
     }
@@ -26,7 +26,7 @@
             <label asp-for="Publisher.UserName">Publisher:</label>
         </div>
         <div class="col-6">
-            <label asp-for="Publisher.UserName">@(Model.Publisher.UserName)</label>
+            <label asp-for="Publisher.UserName">@Html.DisplayFor(m => m.Publisher.UserName)</label>
         </div>
     </div>
     <div class="form-group row">
@@ -34,7 +34,7 @@
             <label asp-for="Type">Type:</label>
         </div>
         <div class="col-6">
-            <label asp-for="Type">@(Model.Type)</label>
+            <label asp-for="Type">@Html.DisplayFor(m => m.Type)</label>
         </div>
     </div>
     <div class="form-group row">
@@ -42,7 +42,7 @@
             <label asp-for="Summary">Summary:</label>
         </div>
         <div class="col-6">
-            <label asp-for="Summary">@(Model.Summary)</label>
+            <label asp-for="Summary">@Html.DisplayFor(m => m.Summary)</label>
         </div>
     </div>
     <div class="form-group row">
@@ -50,7 +50,7 @@
             <label asp-for="About">About:</label>
         </div>
         <div class="col-6">
-            <label asp-for="About">@(Model.About)</label>
+            <label asp-for="About">@Html.DisplayFor(m => m.About)</label>
         </div>
     </div>
 
@@ -59,7 +59,7 @@
             <label asp-for="AmountRaised">Amount Raised So Far:</label>
         </div>
         <div class="col-6">
-            <label asp-for="AmountRaised">@(Model.AmountRaised)</label>
+            <label asp-for="AmountRaised">@Html.DisplayFor(m => m.AmountRaised)</label>
         </div>
     </div>
 

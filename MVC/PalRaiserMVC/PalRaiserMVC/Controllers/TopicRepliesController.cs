@@ -23,7 +23,7 @@ namespace PalRaiserMVC.Controllers
         public IActionResult Index(int topicId)
         {
             HttpContext.Session.SetInt32("currentTopic", topicId);
-            List<TopicReply> topicReplies = _db.TopicReplies.ToList();
+            List<TopicReply> topicReplies = _db.TopicReplies.Include(t => t.User).ToList();
 
             return View(topicReplies);
         }

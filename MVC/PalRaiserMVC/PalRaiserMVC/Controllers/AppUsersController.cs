@@ -25,7 +25,7 @@ namespace PalRaiserMVC.Controllers
             return View();
         }
 
-        public IActionResult ViewProfile(int? id)
+        public IActionResult ViewProfile(int id)
         {
             AppUser = _db.AppUsers.FirstOrDefault(u => u.UserId == id);
             if (AppUser.UserId == HttpContext.Session.GetInt32("currentUser"))

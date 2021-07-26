@@ -23,7 +23,7 @@ namespace PalRaiserMVC.Controllers
         public IActionResult Index(int postId)
         {
             HttpContext.Session.SetInt32("currentPost", postId);
-            List<Comment> comments = _db.Comments.ToList();
+            List<Comment> comments = _db.Comments.Include(c => c.Commentor).ToList();
 
             return View(comments);
         }

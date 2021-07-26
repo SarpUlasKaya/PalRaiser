@@ -62,8 +62,8 @@
                                 @if (item.PublisherId == @HttpContextAccessor.HttpContext.Session.GetInt32("currentUser"))
                                 {
                                     <td>
-                                        <button asp-page-handler="Delete" asp-route-id="@item.PublisherId" class="btn btn-danger btn-sm">Delete</button>
-                                        <a asp-page="UpsertPost" asp-route-id="@item.PublisherId" class="btn btn-success btn-sm text-white">Edit</a>
+                                        <button asp-action="Delete" asp-route-id="@item.PublisherId" class="btn btn-danger btn-sm">Delete</button>
+                                        <a asp-action="UpsertPost" asp-route-id="@item.PublisherId" class="btn btn-success btn-sm text-white">Edit</a>
                                     </td>
                                 }
                             </tr>

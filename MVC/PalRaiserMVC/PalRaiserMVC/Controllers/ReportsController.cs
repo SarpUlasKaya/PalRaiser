@@ -22,7 +22,7 @@ namespace PalRaiserMVC.Controllers
 
         public IActionResult Index()
         {
-            List<Report> reports = _db.Reports.ToList();
+            List<Report> reports = _db.Reports.Include(r => r.User).ToList();
 
             return View(reports);
         }

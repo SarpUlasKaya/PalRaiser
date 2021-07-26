@@ -68,11 +68,11 @@
                                         No
                                     </td>
                                 }
-                                @if (item.Project.Publisher.UserId == @HttpContextAccessor.HttpContext.Session.GetInt32("currentUser"))
+                                @if (item.Project.PublisherId == @HttpContextAccessor.HttpContext.Session.GetInt32("currentUser"))
                                 {
                                     <td>
-                                        <button asp-page-handler="Delete" asp-route-id="@item.GoalId" class="btn btn-danger btn-sm">Delete</button>
-                                        <a asp-page="UpsertReport" asp-route-id="@item.GoalId" class="btn btn-success btn-sm text-white">Edit</a>
+                                        <button asp-action="Delete" asp-route-id="@item.GoalId" class="btn btn-danger btn-sm">Delete</button>
+                                        <a asp-action="UpsertReport" asp-route-id="@item.GoalId" class="btn btn-success btn-sm text-white">Edit</a>
                                     </td>
                                 }
                             </tr>

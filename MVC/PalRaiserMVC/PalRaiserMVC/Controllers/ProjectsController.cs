@@ -27,7 +27,8 @@ namespace PalRaiserMVC.Controllers
 
         public IActionResult ViewProj(int? id)
         {
-            Project = _db.Projects.FirstOrDefault(u => u.ProjectId == id);
+            List<Project> projects = _db.Projects.Include(p => p.Publisher).ToList();
+            Project = projects.FirstOrDefault(u => u.ProjectId == id);
             if (Project.PublisherId == HttpContext.Session.GetInt32("currentUser"))
             {
                 HttpContext.Session.SetInt32("canEditProj", 1);
@@ -68,8 +69,8 @@ namespace PalRaiserMVC.Controllers
             {
                 if (Project.ProjectId == 0)
                 {
-                    //create
-                    Project.Publisher = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser"));
+                    AppUser newPublisher = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser"));
+                    Project.Publisher = newPublisher;
                     _db.Projects.Add(Project);
                     var update = new Update
                     {
