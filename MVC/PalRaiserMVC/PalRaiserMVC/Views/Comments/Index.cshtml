@@ -1,0 +1,79 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model List<PalRaiserMVC.Models.Comment>
+
+<h2 class="text-info">Replies to The Discussion</h2>
+<br />
+
+<div class="border container" style="padding:30px;">
+    <div class="col-6">
+
+    </div>
+    <div class="col-3 offset-3">
+        <a asp-action="UpsertComment" asp-controller="Comments" class="btn btn-info form-control text-white">
+            Add New Comment
+        </a>
+    </div>
+    <div class="col-12 border p-3 mt-3">
+        <form method="post">
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-striped border">
+                    <tr class="table-secondary">
+                        <th>
+                            <label asp-for="FirstOrDefault().Commentor.UserName"> Posted By </label>
+                        </th>
+                        <th>
+                            <label asp-for="FirstOrDefault().Date"> Date </label>
+                        </th>
+                        <th>
+                            <label asp-for="FirstOrDefault().Body"> Comment </label>
+                        </th>
+                        <th>
+                            <label> Rate Comment </label>
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        @if (item.PostId == @HttpContextAccessor.HttpContext.Session.GetInt32("currentPost"))
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(m => item.Commentor.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.Date)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.Body)
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm"> Like (@Html.DisplayFor(m => item.LikeCount))</button>
+                                    <button class="btn btn-danger btn-sm"> Dislike (@Html.DisplayFor(m => item.DislikeCount))</button>
+                                </td>
+                                @if (item.CommentorId == @HttpContextAccessor.HttpContext.Session.GetInt32("currentUser"))
+                                {
+                                    <td>
+                                        <button asp-page-handler="Delete" asp-route-id="@item.CommentId" class="btn btn-danger btn-sm">Delete</button>
+                                        <a asp-page="UpsertTopicReply" asp-route-id="@item.CommentId" class="btn btn-success btn-sm text-white">Edit</a>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    }
+                </table>
+            }
+            else
+            {
+                <p>No comments found.</p>
+            }
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/DeleteItem.js"></script>
+}

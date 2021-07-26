@@ -12,7 +12,7 @@
 
         </div>
         <div class="col-3">
-            @if (@HttpContextAccessor.HttpContext.Session.GetInt32("canEdit") == 1)
+            @if (@HttpContextAccessor.HttpContext.Session.GetInt32("canEditProj") == 1)
             {
                 <a asp-action="UpsertGoal" asp-controller="Goals" class="btn btn-info form-control text-white">
                     Add New Fundraiser Goal

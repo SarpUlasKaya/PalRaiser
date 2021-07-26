@@ -28,11 +28,19 @@ namespace PalRaiserMVC.Controllers
         public IActionResult ViewProfile(int? id)
         {
             AppUser = _db.AppUsers.FirstOrDefault(u => u.UserId == id);
+            if (AppUser.UserId == HttpContext.Session.GetInt32("currentUser"))
+            {
+                HttpContext.Session.SetInt32("canEditProfile", 1);
+            }
+            else
+            {
+                HttpContext.Session.SetInt32("canEditProfile", 0);
+            }
             if (AppUser == null)
             {
                 return NotFound();
             }
-            //Session["username"] = ;
+            HttpContext.Session.SetInt32("profileUser", AppUser.UserId);
             return View(AppUser);
         }
 
@@ -46,12 +54,12 @@ namespace PalRaiserMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUserProjects()
         {
-            AppUser = _db.AppUsers.FirstOrDefault(u => u.UserId == 1);
+            AppUser = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("profileUser"));
             if (AppUser == null)
             {
                 return NotFound();
             }
-            return Json(new { data = await _db.Projects.Where(v => v.Publisher == AppUser).ToListAsync() });
+            return Json(new { data = await _db.Projects.Where(p => p.Publisher == AppUser).ToListAsync() });
         }
 
         //[HttpDelete]

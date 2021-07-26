@@ -28,18 +28,18 @@ namespace PalRaiserMVC.Controllers
         public IActionResult ViewProj(int? id)
         {
             Project = _db.Projects.FirstOrDefault(u => u.ProjectId == id);
-            if (Project.PublisherId == HttpContext.Session.GetInt32("currentProj"))
+            if (Project.PublisherId == HttpContext.Session.GetInt32("currentUser"))
             {
                 HttpContext.Session.SetInt32("canEditProj", 1);
             } else
             {
                 HttpContext.Session.SetInt32("canEditProj", 0);
             }
-            HttpContext.Session.SetInt32("currentProj", Project.ProjectId);
             if (Project == null)
             {
                 return NotFound();
             }
+            HttpContext.Session.SetInt32("currentProj", Project.ProjectId);
             return View(Project);
         }
 

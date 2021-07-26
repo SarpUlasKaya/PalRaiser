@@ -1,0 +1,84 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model List<PalRaiserMVC.Models.Post>
+
+<h2 class="text-info">User's Posts</h2>
+<br />
+
+<div class="border container" style="padding:30px;">
+    @if (@HttpContextAccessor.HttpContext.Session.GetInt32("canEditProfile") == 1)
+    {
+        <div class="col-6">
+
+        </div>
+        <div class="col-3 offset-3">
+            <a asp-action="UpsertPost" asp-controller="Posts" class="btn btn-info form-control text-white">
+                Add New Post
+            </a>
+        </div>
+    }
+    <div class="col-12 border p-3 mt-3">
+        <form method="post">
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-striped border">
+                    <tr class="table-secondary">
+                        <th>
+                            <label asp-for="FirstOrDefault().Body"> Post </label>
+                        </th>
+                        <th>
+                            <label asp-for="FirstOrDefault().Date"> Date </label>
+                        </th>
+                        <th>
+                            <label> Rate Post </label>
+                        </th>
+                        <th>
+                            <label> Comments </label>
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        @if (item.PublisherId == @HttpContextAccessor.HttpContext.Session.GetInt32("profileUser"))
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(m => item.Body)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.Date)
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm"> Like (@Html.DisplayFor(m => item.LikeCount))</button>
+                                    <button class="btn btn-danger btn-sm"> Dislike (@Html.DisplayFor(m => item.DislikeCount))</button>
+                                </td>
+                                <td>
+                                    <a asp-area="" asp-controller="Comments" asp-action="Index" asp-route-id="@item.PostId" class="btn btn-info btn-sm text-white">
+                                        See Replies (@Html.DisplayFor(m => item.CommentCount))
+                                    </a>
+                                </td>
+                                @if (item.PublisherId == @HttpContextAccessor.HttpContext.Session.GetInt32("currentUser"))
+                                {
+                                    <td>
+                                        <button asp-page-handler="Delete" asp-route-id="@item.PublisherId" class="btn btn-danger btn-sm">Delete</button>
+                                        <a asp-page="UpsertPost" asp-route-id="@item.PublisherId" class="btn btn-success btn-sm text-white">Edit</a>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    }
+                </table>
+            }
+            else
+            {
+                <p>No topics found.</p>
+            }
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/DeleteItem.js"></script>
+}

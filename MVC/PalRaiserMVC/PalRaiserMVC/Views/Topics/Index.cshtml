@@ -33,6 +33,9 @@
                             <label asp-for="FirstOrDefault().TopicBody"> Discussion Body</label>
                         </th>
                         <th>
+                            <label> Replies </label>
+                        </th>
+                        <th>
 
                         </th>
                     </tr>
@@ -62,7 +65,7 @@
                                 {
                                     <td>
                                         <button asp-page-handler="Delete" asp-route-id="@item.TopicId" class="btn btn-danger btn-sm">Delete</button>
-                                        <a asp-page="UpsertReport" asp-route-id="@item.TopicId" class="btn btn-success btn-sm text-white">Edit</a>
+                                        <a asp-page="UpsertTopic" asp-route-id="@item.TopicId" class="btn btn-success btn-sm text-white">Edit</a>
                                     </td>
                                 }
                             </tr>
