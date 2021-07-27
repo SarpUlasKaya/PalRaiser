@@ -67,10 +67,10 @@ namespace PalRaiserMVC.Controllers
         {
             if (ModelState.IsValid)
             {
+                AppUser newPublisher = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser"));
+                Project.Publisher = newPublisher;
                 if (Project.ProjectId == 0)
                 {
-                    AppUser newPublisher = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser"));
-                    Project.Publisher = newPublisher;
                     _db.Projects.Add(Project);
                     var update = new Update
                     {
@@ -86,7 +86,7 @@ namespace PalRaiserMVC.Controllers
                     _db.Projects.Update(Project);
                 }
                 _db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ViewProj", new { id = Project.ProjectId });
             }
             return View(Project);
         }

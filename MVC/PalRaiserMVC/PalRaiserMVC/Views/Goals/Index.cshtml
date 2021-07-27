@@ -36,7 +36,7 @@
                             <label asp-for="FirstOrDefault().Amount"> Goal </label>
                         </th>
                         <th>
-                            <label asp-for="FirstOrDefault().Description"> Date </label>
+                            <label asp-for="FirstOrDefault().Description"> Description </label>
                         </th>
                         <th>
                             <label asp-for="FirstOrDefault().IsReached"> Reached? </label>
@@ -72,7 +72,7 @@
                                 {
                                     <td>
                                         <button asp-action="Delete" asp-route-id="@item.GoalId" class="btn btn-danger btn-sm">Delete</button>
-                                        <a asp-action="UpsertReport" asp-route-id="@item.GoalId" class="btn btn-success btn-sm text-white">Edit</a>
+                                        <a asp-action="UpsertGoal" asp-route-id="@item.GoalId" class="btn btn-success btn-sm text-white">Edit</a>
                                     </td>
                                 }
                             </tr>
@@ -85,6 +85,12 @@
                 <p>No goals found.</p>
             }
         </form>
+    </div>
+    <br />
+    <div class="col-3">
+        <a asp-controller="Projects" asp-action="ViewProj" asp-route-id="@HttpContextAccessor.HttpContext.Session.GetInt32("currentProj")" class="btn btn-success form-control">
+            Back To Project
+        </a>
     </div>
 </div>
 
