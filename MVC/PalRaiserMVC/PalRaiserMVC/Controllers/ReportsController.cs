@@ -50,18 +50,16 @@ namespace PalRaiserMVC.Controllers
         {
             if (ModelState.IsValid)
             {
+                Report.Project = _db.Projects.FirstOrDefault(p => p.ProjectId == HttpContext.Session.GetInt32("currentProj"));
+                Report.User = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser"));
+                Report.Date = DateTimeOffset.Now;
                 if (Report.ReportId == 0)
                 {
-                    //create
-                    Report.Project = _db.Projects.FirstOrDefault(p => p.ProjectId == HttpContext.Session.GetInt32("currentProj"));
-                    Report.User = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser"));
-                    Report.Date = DateTimeOffset.Now;
                     _db.Reports.Add(Report);
                     Report.Project.ReportCount++;
                 }
                 else
                 {
-                    Report.Date = DateTimeOffset.Now;
                     _db.Reports.Update(Report);
                 }
                 _db.SaveChanges();

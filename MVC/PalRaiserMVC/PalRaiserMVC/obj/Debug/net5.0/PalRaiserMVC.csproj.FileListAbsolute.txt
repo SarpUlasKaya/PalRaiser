@@ -462,6 +462,6 @@ C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\Topics\Index.cshtml.g.cs
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\Topics\UpsertTopic.cshtml.g.cs
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\Comments\Index.cshtml.g.cs
-C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\Comments\UpsertComments.cshtml.g.cs
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\Posts\Index.cshtml.g.cs
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\Posts\UpsertPost.cshtml.g.cs
+C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\Comments\UpsertComment.cshtml.g.cs

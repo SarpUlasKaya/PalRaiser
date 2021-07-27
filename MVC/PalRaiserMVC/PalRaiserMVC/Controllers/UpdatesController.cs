@@ -56,9 +56,10 @@ namespace PalRaiserMVC.Controllers
                     Update.Project = _db.Projects.FirstOrDefault(p => p.ProjectId == HttpContext.Session.GetInt32("currentProj"));
                     Update.Date = DateTimeOffset.Now;
                     _db.Updates.Add(Update);
-                    }
+                }
                 else
                 {
+                    Update.Project = _db.Projects.FirstOrDefault(p => p.ProjectId == HttpContext.Session.GetInt32("currentProj"));
                     Update.Date = DateTimeOffset.Now;
                     _db.Updates.Update(Update);
                 }

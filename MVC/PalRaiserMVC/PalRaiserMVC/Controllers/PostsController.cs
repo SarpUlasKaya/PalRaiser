@@ -50,16 +50,15 @@ namespace PalRaiserMVC.Controllers
         {
             if (ModelState.IsValid)
             {
+                Post.Publisher = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser"));
+                Post.Date = DateTimeOffset.Now;
                 if (Post.PostId == 0)
                 {
                     //create
-                    Post.Publisher = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser"));
-                    Post.Date = DateTimeOffset.Now;
                     _db.Posts.Add(Post);
                 }
                 else
                 {
-                    Post.Date = DateTimeOffset.Now;
                     _db.Posts.Update(Post);
                 }
                 _db.SaveChanges();
