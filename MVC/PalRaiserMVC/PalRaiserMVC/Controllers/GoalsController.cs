@@ -36,7 +36,7 @@ namespace PalRaiserMVC.Controllers
                 return View(Goal);
             }
             //update
-            Goal = _db.Goals.FirstOrDefault(g => g.GoalId == id && g.ProjectId == HttpContext.Session.GetInt32("currentProj"));
+            Goal = _db.Goals.FirstOrDefault(g => g.GoalId == id);
             if (Goal == null)
             {
                 return NotFound();
@@ -50,10 +50,9 @@ namespace PalRaiserMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Goal.ProjectId == 0)
+                Goal.Project = _db.Projects.FirstOrDefault(p => p.ProjectId == HttpContext.Session.GetInt32("currentProj"));
+                if (Goal.GoalId == 0)
                 {
-                    //create
-                    Goal.Project = _db.Projects.FirstOrDefault(p => p.ProjectId == HttpContext.Session.GetInt32("currentProj"));
                     _db.Goals.Add(Goal);
                 }
                 else
@@ -69,7 +68,7 @@ namespace PalRaiserMVC.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            var goalFromDB = await _db.Goals.FirstOrDefaultAsync(g => g.GoalId == id && g.ProjectId == HttpContext.Session.GetInt32("currentProj"));
+            var goalFromDB = await _db.Goals.FirstOrDefaultAsync(g => g.GoalId == id);
             if (goalFromDB == null)
             {
                 return Json(new { success = false, message = "Error while deleting." });

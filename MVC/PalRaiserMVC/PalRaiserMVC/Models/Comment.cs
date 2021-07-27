@@ -9,6 +9,7 @@ namespace PalRaiserMVC.Models
 {
     public class Comment
     {
+        [Key]
         public int CommentId { get; set; }
 
         [ForeignKey("CommentorId")]

@@ -36,7 +36,7 @@ namespace PalRaiserMVC.Controllers
                 return View(Report);
             }
             //update
-            Report = _db.Reports.FirstOrDefault(r => r.ReportId == id && r.ProjectId == HttpContext.Session.GetInt32("currentProj"));
+            Report = _db.Reports.FirstOrDefault(r => r.ReportId == id);
             if (Report == null)
             {
                 return NotFound();
@@ -71,7 +71,7 @@ namespace PalRaiserMVC.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            var reportFromDB = await _db.Reports.FirstOrDefaultAsync(r => r.ReportId == id && r.ProjectId == HttpContext.Session.GetInt32("currentProj"));
+            var reportFromDB = await _db.Reports.FirstOrDefaultAsync(r => r.ReportId == id);
             if (reportFromDB == null)
             {
                 return Json(new { success = false, message = "Error while deleting." });

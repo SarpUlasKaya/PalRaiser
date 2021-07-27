@@ -9,6 +9,7 @@ namespace PalRaiserMVC.Models
 {
     public class Goal
     {
+        [Key]
         public int GoalId { get; set; }
         
         [ForeignKey("ProjectId")]

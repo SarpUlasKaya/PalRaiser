@@ -27,6 +27,8 @@ namespace PalRaiserMVC.Models
 
         public DateTimeOffset Date { get; set; }
         public int NoOfReplies { get; set; }
+        public int LikeCount { get; set; }
+        public int DislikeCount { get; set; }
 
         public virtual ICollection<TopicReply> Replies { get; set; }
         public virtual ICollection<TopicRating> Ratings { get; set; }

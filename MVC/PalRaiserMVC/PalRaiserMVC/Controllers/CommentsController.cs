@@ -37,7 +37,7 @@ namespace PalRaiserMVC.Controllers
                 return View(Comment);
             }
             //update
-            Comment = _db.Comments.FirstOrDefault(c => c.CommentId == id && c.PostId == HttpContext.Session.GetInt32("currentPost"));
+            Comment = _db.Comments.FirstOrDefault(c => c.CommentId == id);
             if (Comment == null)
             {
                 return NotFound();
@@ -51,17 +51,15 @@ namespace PalRaiserMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Comment.PostId == 0)
+                Comment.Post = _db.Posts.FirstOrDefault(p => p.PostId == HttpContext.Session.GetInt32("currentPost"));
+                Comment.Commentor = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser"));
+                Comment.Date = DateTimeOffset.Now;
+                if (Comment.CommentId == 0)
                 {
-                    //create
-                    Comment.Post = _db.Posts.FirstOrDefault(p => p.PostId == HttpContext.Session.GetInt32("currentPost"));
-                    Comment.Commentor = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser"));
-                    Comment.Date = DateTimeOffset.Now;
                     _db.Comments.Add(Comment);
                 }
                 else
                 {
-                    Comment.Date = DateTimeOffset.Now;
                     _db.Comments.Update(Comment);
                 }
                 _db.SaveChanges();
@@ -73,7 +71,7 @@ namespace PalRaiserMVC.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            var commentFromDB = await _db.Comments.FirstOrDefaultAsync(c => c.CommentId == id && c.PostId == HttpContext.Session.GetInt32("currentPost"));
+            var commentFromDB = await _db.Comments.FirstOrDefaultAsync(c => c.CommentId == id);
             if (commentFromDB == null)
             {
                 return Json(new { success = false, message = "Error while deleting." });

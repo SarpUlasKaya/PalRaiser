@@ -23,7 +23,7 @@ namespace PalRaiserMVC.Models
 
         [ForeignKey("PublisherId")]
         public virtual AppUser Publisher { get; set; }
-        public int? PublisherId { get; set; }
+        public int PublisherId { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<PostRating> Ratings { get; set; }

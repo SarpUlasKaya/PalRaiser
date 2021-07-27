@@ -36,7 +36,7 @@ namespace PalRaiserMVC.Controllers
                 return View(Post);
             }
             //update
-            Post = _db.Posts.FirstOrDefault(p => p.PostId == id && p.PublisherId == HttpContext.Session.GetInt32("profileUser"));
+            Post = _db.Posts.FirstOrDefault(p => p.PostId == id);
             if (Post == null)
             {
                 return NotFound();

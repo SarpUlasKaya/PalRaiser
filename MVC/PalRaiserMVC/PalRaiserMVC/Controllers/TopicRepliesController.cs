@@ -37,7 +37,7 @@ namespace PalRaiserMVC.Controllers
                 return View(TopicReply);
             }
             //update
-            TopicReply = _db.TopicReplies.FirstOrDefault(t => t.TopicReplyId == id && t.TopicId == HttpContext.Session.GetInt32("currentTopic"));
+            TopicReply = _db.TopicReplies.FirstOrDefault(t => t.TopicReplyId == id);
             if (TopicReply == null)
             {
                 return NotFound();
@@ -51,18 +51,16 @@ namespace PalRaiserMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (TopicReply.TopicId == 0)
+                TopicReply.Topic = _db.Topics.FirstOrDefault(t => t.TopicId == HttpContext.Session.GetInt32("currentTopic"));
+                TopicReply.User = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser"));
+                TopicReply.Date = DateTimeOffset.Now;
+                if (TopicReply.TopicReplyId == 0)
                 {
-                    //create
-                    TopicReply.Topic = _db.Topics.FirstOrDefault(t => t.TopicId == HttpContext.Session.GetInt32("currentTopic"));
-                    TopicReply.User = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser"));
-                    TopicReply.Date = DateTimeOffset.Now;
-                    TopicReply.Topic.NoOfReplies++;
                     _db.TopicReplies.Add(TopicReply);
+                    TopicReply.Topic.NoOfReplies++;
                 }
                 else
                 {
-                    TopicReply.Date = DateTimeOffset.Now;
                     _db.TopicReplies.Update(TopicReply);
                 }
                 _db.SaveChanges();
@@ -74,7 +72,7 @@ namespace PalRaiserMVC.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            var topicReplyFromDB = await _db.TopicReplies.FirstOrDefaultAsync(t => t.TopicReplyId == id && t.TopicId == HttpContext.Session.GetInt32("currentTopic"));
+            var topicReplyFromDB = await _db.TopicReplies.FirstOrDefaultAsync(t => t.TopicReplyId == id);
             if (topicReplyFromDB == null)
             {
                 return Json(new { success = false, message = "Error while deleting." });

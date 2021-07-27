@@ -1,12 +1,12 @@
 ﻿@model PalRaiserMVC.Models.TopicReply
 
 <br />
-<h2 class="text-info">@(Model.TopicId!=0 ? "Edit" : "Add") Discussion Reply</h2>
+<h2 class="text-info">@(Model.TopicReplyId!=0 ? "Edit" : "Add") Discussion Reply</h2>
 <br />
 
 <div class="border container" style="padding:30px;">
     <form method="post">
-        @if (Model.TopicId != 0)
+        @if (Model.TopicReplyId != 0)
         {
             <input type="hidden" asp-for="TopicReplyId" />
         }
@@ -23,7 +23,7 @@
         <div class="form-group row">
             <div class="col-3 offset-3">
                 <button type="Submit" class="btn btn-primary form-control">
-                    @(Model.TopicId!=0 ? "Update" : "Create")
+                    @(Model.TopicReplyId!=0 ? "Update" : "Create")
                 </button>
             </div>
             <div class="col-3">

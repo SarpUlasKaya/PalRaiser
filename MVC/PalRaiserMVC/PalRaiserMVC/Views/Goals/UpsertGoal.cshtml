@@ -1,12 +1,12 @@
 ﻿@model PalRaiserMVC.Models.Goal
 
 <br />
-<h2 class="text-info">@(Model.ProjectId!=0 ? "Edit" : "Create") Fundraiser Goal</h2>
+<h2 class="text-info">@(Model.GoalId!=0 ? "Edit" : "Create") Fundraiser Goal</h2>
 <br />
 
 <div class="border container" style="padding:30px;">
     <form method="post">
-        @if (Model.ProjectId != 0)
+        @if (Model.GoalId != 0)
         {
             <input type="hidden" asp-for="GoalId" />
         }
@@ -32,7 +32,7 @@
         <div class="form-group row">
             <div class="col-3 offset-3">
                 <button type="Submit" class="btn btn-primary form-control">
-                    @(Model.ProjectId!=0 ? "Update" : "Create")
+                    @(Model.GoalId!=0 ? "Update" : "Create")
                 </button>
             </div>
             <div class="col-3">

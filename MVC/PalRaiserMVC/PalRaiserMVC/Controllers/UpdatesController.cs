@@ -36,7 +36,7 @@ namespace PalRaiserMVC.Controllers
                 return View(Update);
             }
             //update
-            Update = _db.Updates.FirstOrDefault(u => u.UpdateId == id && u.ProjectId == HttpContext.Session.GetInt32("currentProj"));
+            Update = _db.Updates.FirstOrDefault(u => u.UpdateId == id);
             if (Update == null)
             {
                 return NotFound();
@@ -50,17 +50,14 @@ namespace PalRaiserMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Update.ProjectId == 0)
+                Update.Project = _db.Projects.FirstOrDefault(p => p.ProjectId == HttpContext.Session.GetInt32("currentProj"));
+                Update.Date = DateTimeOffset.Now;
+                if (Update.UpdateId == 0)
                 {
-                    //create
-                    Update.Project = _db.Projects.FirstOrDefault(p => p.ProjectId == HttpContext.Session.GetInt32("currentProj"));
-                    Update.Date = DateTimeOffset.Now;
                     _db.Updates.Add(Update);
                 }
                 else
                 {
-                    Update.Project = _db.Projects.FirstOrDefault(p => p.ProjectId == HttpContext.Session.GetInt32("currentProj"));
-                    Update.Date = DateTimeOffset.Now;
                     _db.Updates.Update(Update);
                 }
                 _db.SaveChanges();
@@ -72,7 +69,7 @@ namespace PalRaiserMVC.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            var updateFromDB = await _db.Updates.FirstOrDefaultAsync(u => u.UpdateId == id && u.ProjectId == HttpContext.Session.GetInt32("currentProj"));
+            var updateFromDB = await _db.Updates.FirstOrDefaultAsync(u => u.UpdateId == id);
             if (updateFromDB == null)
             {
                 return Json(new { success = false, message = "Error while deleting." });
