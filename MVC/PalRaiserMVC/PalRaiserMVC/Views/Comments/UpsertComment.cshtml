@@ -1,4 +1,10 @@
-﻿@model PalRaiserMVC.Models.Comment
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model PalRaiserMVC.Models.Comment
+
+<br />
+<h2 class="text-info">Topic ID: @HttpContextAccessor.HttpContext.Session.GetInt32("currentPost")</h2>
+<br />
 
 <br />
 <h2 class="text-info">@(Model.CommentId!=0 ? "Edit" : "Add") Comment</h2>
@@ -27,7 +33,7 @@
                 </button>
             </div>
             <div class="col-3">
-                <a asp-action="Index", asp-route-id="PostId" class="btn btn-success form-control">
+                <a asp-action="Index" , asp-route-id="@HttpContextAccessor.HttpContext.Session.GetInt32("currentPost")" class="btn btn-success form-control">
                     Back To Comments
                 </a>
             </div>

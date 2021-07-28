@@ -22,7 +22,7 @@ namespace PalRaiserMVC.Controllers
 
         public IActionResult Index()
         {
-            List<Post> posts = _db.Posts.ToList();
+            List<Post> posts = _db.Posts.Include(p => p.Publisher).ToList();
 
             return View(posts);
         }
@@ -67,7 +67,6 @@ namespace PalRaiserMVC.Controllers
             return View(Post);
         }
 
-        [HttpDelete]
         public IActionResult DeletePost(int id)
         {
             var postFromDB = _db.Posts.FirstOrDefault(p => p.PostId == id);

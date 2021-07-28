@@ -91,14 +91,9 @@ namespace PalRaiserMVC.Controllers
             return View(Project);
         }
 
-        public IActionResult FundProj(int id)
+        public IActionResult FundProj()
         {
-            //Project = _db.Projects.FirstOrDefault(u => u.ProjectId == id);
-            //if (Project == null)
-            //{
-            //    return NotFound();
-            //}
-            return View(Project);
+            return View();
         }
 
         public IActionResult AddFunds(int amount)
@@ -114,7 +109,7 @@ namespace PalRaiserMVC.Controllers
             return RedirectToAction("ViewProj", new { id = Project.ProjectId });
         }
 
-        [HttpDelete]
+        //[HttpDelete]
         public IActionResult DeleteProj(int id)
         {
             var projectFromDB = _db.Projects.FirstOrDefault(u => u.ProjectId == id);

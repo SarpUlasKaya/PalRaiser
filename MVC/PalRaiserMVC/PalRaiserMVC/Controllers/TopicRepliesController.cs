@@ -20,9 +20,9 @@ namespace PalRaiserMVC.Controllers
             _db = db;
         }
 
-        public IActionResult Index(int topicId)
+        public IActionResult Index(int id)
         {
-            HttpContext.Session.SetInt32("currentTopic", topicId);
+            HttpContext.Session.SetInt32("currentTopic", id);
             List<TopicReply> topicReplies = _db.TopicReplies.Include(t => t.User).ToList();
 
             return View(topicReplies);
@@ -69,14 +69,15 @@ namespace PalRaiserMVC.Controllers
             return View(TopicReply);
         }
 
-        [HttpDelete]
         public IActionResult DeleteTopicReply(int id)
         {
-            var topicReplyFromDB = _db.TopicReplies.FirstOrDefault(t => t.TopicReplyId == id);
+            var topicReplies = _db.TopicReplies.Include(t => t.Topic).ToList();
+            var topicReplyFromDB = topicReplies.FirstOrDefault(t => t.TopicReplyId == id);
             if (topicReplyFromDB == null)
             {
                 return NotFound();
             }
+            topicReplyFromDB.Topic.NoOfReplies--;
             _db.TopicReplies.Remove(topicReplyFromDB);
             _db.SaveChanges();
             return RedirectToAction("Index", new { id = HttpContext.Session.GetInt32("currentTopic") });

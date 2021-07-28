@@ -56,7 +56,7 @@
                                 <td>
                                     @Html.DisplayFor(m => item.Description)
                                 </td>
-                                @if (item.Project.AmountRaised > item.Amount)
+                                @if (item.Project.AmountRaised >= item.Amount)
                                 {
                                     <td>
                                         Yes

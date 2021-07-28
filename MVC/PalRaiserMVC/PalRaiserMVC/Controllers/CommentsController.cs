@@ -20,9 +20,9 @@ namespace PalRaiserMVC.Controllers
             _db = db;
         }
 
-        public IActionResult Index(int postId)
+        public IActionResult Index(int id)
         {
-            HttpContext.Session.SetInt32("currentPost", postId);
+            HttpContext.Session.SetInt32("currentPost", id);
             List<Comment> comments = _db.Comments.Include(c => c.Commentor).ToList();
 
             return View(comments);
@@ -57,6 +57,7 @@ namespace PalRaiserMVC.Controllers
                 if (Comment.CommentId == 0)
                 {
                     _db.Comments.Add(Comment);
+                    Comment.Post.CommentCount++;
                 }
                 else
                 {
@@ -68,14 +69,15 @@ namespace PalRaiserMVC.Controllers
             return View(Comment);
         }
 
-        [HttpDelete]
         public IActionResult DeleteComment(int id)
         {
-            var commentFromDB = _db.Comments.FirstOrDefault(c => c.CommentId == id);
+            var comments = _db.Comments.Include(c => c.Post).ToList();
+            var commentFromDB = comments.FirstOrDefault(c => c.CommentId == id);
             if (commentFromDB == null)
             {
                 return NotFound();
             }
+            commentFromDB.Post.CommentCount--;
             _db.Comments.Remove(commentFromDB);
             _db.SaveChanges();
             return RedirectToAction("Index", new { id = HttpContext.Session.GetInt32("currentPost") });

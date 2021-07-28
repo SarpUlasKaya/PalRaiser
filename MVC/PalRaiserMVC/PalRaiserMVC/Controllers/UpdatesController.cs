@@ -66,7 +66,6 @@ namespace PalRaiserMVC.Controllers
             return View(Update);
         }
 
-        [HttpDelete]
         public IActionResult DeleteUpdate(int id)
         {
             var updateFromDB = _db.Updates.FirstOrDefault(u => u.UpdateId == id);

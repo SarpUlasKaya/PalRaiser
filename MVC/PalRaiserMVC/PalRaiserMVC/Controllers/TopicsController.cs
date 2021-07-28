@@ -67,7 +67,6 @@ namespace PalRaiserMVC.Controllers
             return View(Topic);
         }
 
-        [HttpDelete]
         public IActionResult DeleteTopic(int id)
         {
             var topicFromDB = _db.Topics.FirstOrDefault(t => t.TopicId == id);

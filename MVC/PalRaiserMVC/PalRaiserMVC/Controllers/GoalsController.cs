@@ -65,7 +65,6 @@ namespace PalRaiserMVC.Controllers
             return View(Goal);
         }
 
-        [HttpDelete]
         public IActionResult DeleteGoal(int id)
         {
             var goalFromDB = _db.Goals.FirstOrDefault(g => g.GoalId == id);

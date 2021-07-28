@@ -68,14 +68,15 @@ namespace PalRaiserMVC.Controllers
             return View(Report);
         }
 
-        [HttpDelete]
         public IActionResult DeleteReport(int id)
         {
-            var reportFromDB = _db.Reports.FirstOrDefault(r => r.ReportId == id);
+            var reports = _db.Reports.Include(r => r.Project).ToList();
+            var reportFromDB = reports.FirstOrDefault(r => r.ReportId == id);
             if (reportFromDB == null)
             {
                 return NotFound();
             }
+            reportFromDB.Project.ReportCount--;
             _db.Reports.Remove(reportFromDB);
             _db.SaveChanges();
             return RedirectToAction("Index");

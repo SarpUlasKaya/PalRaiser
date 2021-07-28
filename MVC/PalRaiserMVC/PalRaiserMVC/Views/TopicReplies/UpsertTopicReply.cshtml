@@ -1,4 +1,10 @@
-﻿@model PalRaiserMVC.Models.TopicReply
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model PalRaiserMVC.Models.TopicReply
+
+<br />
+<h2 class="text-info">Topic ID: @HttpContextAccessor.HttpContext.Session.GetInt32("currentTopic")</h2>
+<br />
 
 <br />
 <h2 class="text-info">@(Model.TopicReplyId!=0 ? "Edit" : "Add") Discussion Reply</h2>
@@ -27,7 +33,7 @@
                 </button>
             </div>
             <div class="col-3">
-                <a asp-action="Index", asp-route-id="TopicId" class="btn btn-success form-control">
+                <a asp-action="Index" , asp-route-id="@HttpContextAccessor.HttpContext.Session.GetInt32("currentTopic")" class="btn btn-success form-control">
                     Back To Replies
                 </a>
             </div>
