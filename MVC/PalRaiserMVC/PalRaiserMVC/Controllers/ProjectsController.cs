@@ -93,11 +93,11 @@ namespace PalRaiserMVC.Controllers
 
         public IActionResult FundProj(int id)
         {
-            Project = _db.Projects.FirstOrDefault(u => u.ProjectId == id);
-            if (Project == null)
-            {
-                return NotFound();
-            }
+            //Project = _db.Projects.FirstOrDefault(u => u.ProjectId == id);
+            //if (Project == null)
+            //{
+            //    return NotFound();
+            //}
             return View(Project);
         }
 
@@ -108,21 +108,25 @@ namespace PalRaiserMVC.Controllers
             {
                 return NotFound();
             }
-            //Fund Project
             Project.AmountRaised += amount;
-            _db.Projects.Update(Project);
+            //_db.Projects.Update(Project);
             _db.SaveChanges();
-            return RedirectToAction("FundsTransferred", new { id = HttpContext.Session.GetInt32("currentProj") });
+            return RedirectToAction("ViewProj", new { id = Project.ProjectId });
         }
 
-        public IActionResult FundsTransferred(int id)
+        [HttpDelete]
+        public IActionResult DeleteProj(int id)
         {
-            Project = _db.Projects.FirstOrDefault(u => u.ProjectId == id);
-            if (Project == null)
+            var projectFromDB = _db.Projects.FirstOrDefault(u => u.ProjectId == id);
+            if (projectFromDB == null)
             {
+                //return Json(new { success = false, message = "Error while deleting." });
                 return NotFound();
             }
-            return View(Project);
+            _db.Projects.Remove(projectFromDB);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+            //return Json(new { success = true, message = "Deletion successful" });
         }
 
         #region API Calls
@@ -131,19 +135,6 @@ namespace PalRaiserMVC.Controllers
         {
             var projects = await _db.Projects.ToListAsync();
             return Json(new { data = projects });
-        }
-
-        [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var projectFromDB = await _db.Projects.FirstOrDefaultAsync(u => u.ProjectId == id);
-            if (projectFromDB == null)
-            {
-                return Json(new { success = false, message = "Error while deleting." });
-            }
-            _db.Projects.Remove(projectFromDB);
-            await _db.SaveChangesAsync();
-            return Json(new { success = true, message = "Deletion successful" });
         }
         #endregion
     }

@@ -67,16 +67,16 @@ namespace PalRaiserMVC.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult DeleteUpdate(int id)
         {
-            var updateFromDB = await _db.Updates.FirstOrDefaultAsync(u => u.UpdateId == id);
+            var updateFromDB = _db.Updates.FirstOrDefault(u => u.UpdateId == id);
             if (updateFromDB == null)
             {
-                return Json(new { success = false, message = "Error while deleting." });
+                return NotFound();
             }
             _db.Updates.Remove(updateFromDB);
-            await _db.SaveChangesAsync();
-            return Json(new { success = true, message = "Deletion successful" });
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

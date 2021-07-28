@@ -50,7 +50,7 @@
                                 @if (item.UserId == @HttpContextAccessor.HttpContext.Session.GetInt32("currentUser"))
                                 {
                                     <td>
-                                        <button asp-action="Delete" asp-route-id="@item.TopicReplyId" class="btn btn-danger btn-sm">Delete</button>
+                                        <a asp-action="DeleteTopicReply" asp-route-id="@item.TopicReplyId" onclick="return confirm('Are you sure you want to remove your reply?')" class="btn btn-danger btn-sm">Delete</a>
                                         <a asp-action="UpsertTopicReply" asp-route-id="@item.TopicReplyId" class="btn btn-success btn-sm text-white">Edit</a>
                                     </td>
                                 }
@@ -66,7 +66,3 @@
         </form>
     </div>
 </div>
-
-@section Scripts {
-    <script src="~/js/DeleteItem.js"></script>
-}

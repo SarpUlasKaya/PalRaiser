@@ -1,9 +1,4 @@
 ﻿@model PalRaiserMVC.Models.Project
-@using Microsoft.AspNetCore.Http;
-@inject IHttpContextAccessor HttpContextAccessor
-
-<h2 class="text-info">Session Id: @HttpContextAccessor.HttpContext.Session.GetInt32("currentUser")</h2>
-<br />
 
 <br />
 <h2 class="text-info">@(Model.ProjectId!=0 ? "Edit" : "Create") Project</h2>

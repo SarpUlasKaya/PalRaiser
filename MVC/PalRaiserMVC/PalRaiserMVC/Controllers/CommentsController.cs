@@ -69,16 +69,16 @@ namespace PalRaiserMVC.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult DeleteComment(int id)
         {
-            var commentFromDB = await _db.Comments.FirstOrDefaultAsync(c => c.CommentId == id);
+            var commentFromDB = _db.Comments.FirstOrDefault(c => c.CommentId == id);
             if (commentFromDB == null)
             {
-                return Json(new { success = false, message = "Error while deleting." });
+                return NotFound();
             }
             _db.Comments.Remove(commentFromDB);
-            await _db.SaveChangesAsync();
-            return Json(new { success = true, message = "Deletion successful" });
+            _db.SaveChanges();
+            return RedirectToAction("Index", new { id = HttpContext.Session.GetInt32("currentPost") });
         }
     }
 }

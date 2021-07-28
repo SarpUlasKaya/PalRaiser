@@ -456,7 +456,6 @@ C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\Updates\Index.cshtml.g.cs
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\Updates\UpsertUpdate.cshtml.g.cs
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\Projects\FundProj.cshtml.g.cs
-C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\Projects\FundsTransferred.cshtml.g.cs
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\TopicReplies\Index.cshtml.g.cs
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\TopicReplies\UpsertTopicReply.cshtml.g.cs
 C:\Users\ULAS\Documents\GitHub\PalRaiser\MVC\PalRaiserMVC\PalRaiserMVC\obj\Debug\net5.0\Razor\Views\Topics\Index.cshtml.g.cs
