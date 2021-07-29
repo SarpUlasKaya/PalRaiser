@@ -78,5 +78,77 @@ namespace PalRaiserMVC.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public IActionResult ToggleLikePost(int id)
+        {
+            var postRatingFromDB = _db.PostRatings.FirstOrDefault(p => p.PostId == id && p.UserId == HttpContext.Session.GetInt32("currentUser"));
+            Post = _db.Posts.FirstOrDefault(p => p.PostId == id);
+            if (postRatingFromDB == null)
+            {
+                postRatingFromDB = new PostRating
+                {
+                    Post = Post,
+                    User = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser")),
+                    IsLike = true
+                };
+                _db.PostRatings.Add(postRatingFromDB);
+                Post.LikeCount++;
+            }
+            else if (!postRatingFromDB.IsLike)
+            {
+                postRatingFromDB.IsLike = true;
+                Post.DislikeCount--;
+                Post.LikeCount++;
+            }
+            else if (postRatingFromDB.IsLike)
+            {
+                Post.LikeCount--;
+                _db.PostRatings.Remove(postRatingFromDB);
+            }
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult ToggleDislikePost(int id)
+        {
+            var postRatingFromDB = _db.PostRatings.FirstOrDefault(p => p.PostId == id && p.UserId == HttpContext.Session.GetInt32("currentUser"));
+            Post = _db.Posts.FirstOrDefault(p => p.PostId == id);
+            if (postRatingFromDB == null)
+            {
+                postRatingFromDB = new PostRating
+                {
+                    Post = Post,
+                    User = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser")),
+                    IsLike = false
+                };
+                _db.PostRatings.Add(postRatingFromDB);
+                Post.DislikeCount++;
+            }
+            else if (postRatingFromDB.IsLike)
+            {
+                postRatingFromDB.IsLike = true;
+                Post.DislikeCount++;
+                Post.LikeCount--;
+            }
+            else if (!postRatingFromDB.IsLike)
+            {
+                Post.DislikeCount--;
+                _db.PostRatings.Remove(postRatingFromDB);
+            }
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult RemovePostRating(int id)
+        {
+            var postRatingFromDB = _db.PostRatings.FirstOrDefault(p => p.PostId == id && p.UserId == HttpContext.Session.GetInt32("currentUser"));
+            if (postRatingFromDB == null)
+            {
+                return NotFound();
+            }
+            _db.PostRatings.Remove(postRatingFromDB);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -30,6 +30,9 @@
                             <label asp-for="FirstOrDefault().ReplyBody"> Reply </label>
                         </th>
                         <th>
+                            <label> Rate Reply </label>
+                        </th>
+                        <th>
 
                         </th>
                     </tr>
@@ -46,6 +49,10 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(m => item.ReplyBody)
+                                </td>
+                                <td>
+                                    <a asp-area="" asp-controller="TopicReplies" asp-action="ToggleLikeTopicReply" asp-route-id="@item.TopicReplyId" class="btn btn-success btn-sm"> Like (@Html.DisplayFor(m => item.LikeCount))</a>
+                                    <a asp-area="" asp-controller="TopicReplies" asp-action="ToggleDislikeTopicReply" asp-route-id="@item.TopicReplyId" class="btn btn-danger btn-sm"> Dislike (@Html.DisplayFor(m => item.DislikeCount))</a>
                                 </td>
                                 @if (item.UserId == @HttpContextAccessor.HttpContext.Session.GetInt32("currentUser"))
                                 {

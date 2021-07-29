@@ -91,6 +91,21 @@ namespace PalRaiserMVC.Controllers
             return View(Project);
         }
 
+        //[HttpDelete]
+        public IActionResult DeleteProj(int id)
+        {
+            var projectFromDB = _db.Projects.FirstOrDefault(u => u.ProjectId == id);
+            if (projectFromDB == null)
+            {
+                //return Json(new { success = false, message = "Error while deleting." });
+                return NotFound();
+            }
+            _db.Projects.Remove(projectFromDB);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+            //return Json(new { success = true, message = "Deletion successful" });
+        }
+
         public IActionResult FundProj()
         {
             return View();
@@ -109,19 +124,76 @@ namespace PalRaiserMVC.Controllers
             return RedirectToAction("ViewProj", new { id = Project.ProjectId });
         }
 
-        //[HttpDelete]
-        public IActionResult DeleteProj(int id)
+        public IActionResult ToggleLikeProj(int id)
         {
-            var projectFromDB = _db.Projects.FirstOrDefault(u => u.ProjectId == id);
-            if (projectFromDB == null)
+            var projectRatingFromDB = _db.ProjectRatings.FirstOrDefault(p => p.ProjectId == id && p.UserId == HttpContext.Session.GetInt32("currentUser"));
+            Project = _db.Projects.FirstOrDefault(p => p.ProjectId == id);
+            if (projectRatingFromDB == null)
             {
-                //return Json(new { success = false, message = "Error while deleting." });
+                projectRatingFromDB = new ProjectRating
+                {
+                    Project = Project,
+                    User = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser")),
+                    IsLike = true
+                };
+                _db.ProjectRatings.Add(projectRatingFromDB);
+                Project.LikeCount++;
+            }
+            else if (!projectRatingFromDB.IsLike)
+            {
+                projectRatingFromDB.IsLike = true;
+                Project.DislikeCount--;
+                Project.LikeCount++;
+            }
+            else if (projectRatingFromDB.IsLike)
+            {
+                Project.LikeCount--;
+                _db.ProjectRatings.Remove(projectRatingFromDB);
+            }
+            _db.SaveChanges();
+            return RedirectToAction("ViewProj", new { id = id });
+        }
+
+        public IActionResult ToggleDislikeProj(int id)
+        {
+            var projectRatingFromDB = _db.ProjectRatings.FirstOrDefault(p => p.ProjectId == id && p.UserId == HttpContext.Session.GetInt32("currentUser"));
+            Project = _db.Projects.FirstOrDefault(p => p.ProjectId == id);
+            if (projectRatingFromDB == null)
+            {
+                projectRatingFromDB = new ProjectRating
+                {
+                    Project = Project,
+                    User = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser")),
+                    IsLike = false
+                };
+                _db.ProjectRatings.Add(projectRatingFromDB);
+                Project.DislikeCount++;
+            }
+            else if (projectRatingFromDB.IsLike)
+            {
+                projectRatingFromDB.IsLike = false;
+                Project.DislikeCount++;
+                Project.LikeCount--;
+            }
+            else if (!projectRatingFromDB.IsLike)
+            {
+                Project.DislikeCount--;
+                _db.ProjectRatings.Remove(projectRatingFromDB);
+            }
+            _db.SaveChanges();
+            return RedirectToAction("ViewProj", new { id = id });
+        }
+
+        public IActionResult RemoveProjRating(int id)
+        {
+            var projectRatingFromDB = _db.ProjectRatings.FirstOrDefault(p => p.ProjectId == id && p.UserId == HttpContext.Session.GetInt32("currentUser"));
+            if (projectRatingFromDB == null)
+            {
                 return NotFound();
             }
-            _db.Projects.Remove(projectFromDB);
+            _db.ProjectRatings.Remove(projectRatingFromDB);
             _db.SaveChanges();
-            return RedirectToAction("Index");
-            //return Json(new { success = true, message = "Deletion successful" });
+            return RedirectToAction("ViewProj", new { id = id });
         }
 
         #region API Calls

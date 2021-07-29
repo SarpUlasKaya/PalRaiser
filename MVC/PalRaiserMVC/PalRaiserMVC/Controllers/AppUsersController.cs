@@ -28,6 +28,10 @@ namespace PalRaiserMVC.Controllers
         public IActionResult ViewProfile(int id)
         {
             AppUser = _db.AppUsers.FirstOrDefault(u => u.UserId == id);
+            if (AppUser == null)
+            {
+                return NotFound();
+            }
             if (AppUser.UserId == HttpContext.Session.GetInt32("currentUser"))
             {
                 HttpContext.Session.SetInt32("canEditProfile", 1);
@@ -35,10 +39,6 @@ namespace PalRaiserMVC.Controllers
             else
             {
                 HttpContext.Session.SetInt32("canEditProfile", 0);
-            }
-            if (AppUser == null)
-            {
-                return NotFound();
             }
             HttpContext.Session.SetInt32("profileUser", AppUser.UserId);
             return View(AppUser);

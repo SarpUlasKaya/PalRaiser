@@ -33,6 +33,9 @@
                             <label asp-for="FirstOrDefault().TopicBody"> Discussion Body</label>
                         </th>
                         <th>
+                            <label> Rate Topic </label>
+                        </th>
+                        <th>
                             <label> Replies </label>
                         </th>
                         <th>
@@ -55,6 +58,10 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(m => item.TopicBody)
+                                </td>
+                                <td>
+                                    <a asp-area="" asp-controller="Topics" asp-action="ToggleLikeTopic" asp-route-id="@item.TopicId" class="btn btn-success btn-sm"> Like (@Html.DisplayFor(m => item.LikeCount))</a>
+                                    <a asp-area="" asp-controller="Topics" asp-action="ToggleDislikeTopic" asp-route-id="@item.TopicId" class="btn btn-danger btn-sm"> Dislike (@Html.DisplayFor(m => item.DislikeCount))</a>
                                 </td>
                                 <td>
                                     <a asp-area="" asp-controller="TopicReplies" asp-action="Index" asp-route-id="@item.TopicId" class="btn btn-info btn-sm text-white">

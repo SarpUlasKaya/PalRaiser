@@ -82,5 +82,77 @@ namespace PalRaiserMVC.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index", new { id = HttpContext.Session.GetInt32("currentPost") });
         }
+
+        public IActionResult ToggleLikeComment(int id)
+        {
+            var commentRatingFromDB = _db.CommentRatings.FirstOrDefault(c => c.CommentId == id && c.UserId == HttpContext.Session.GetInt32("currentUser"));
+            Comment = _db.Comments.FirstOrDefault(c => c.CommentId == id);
+            if (commentRatingFromDB == null)
+            {
+                commentRatingFromDB = new CommentRating
+                {
+                    Comment = Comment,
+                    User = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser")),
+                    IsLike = true
+                };
+                _db.CommentRatings.Add(commentRatingFromDB);
+                Comment.LikeCount++;
+            }
+            else if (!commentRatingFromDB.IsLike)
+            {
+                commentRatingFromDB.IsLike = true;
+                Comment.DislikeCount--;
+                Comment.LikeCount++;
+            }
+            else if (commentRatingFromDB.IsLike)
+            {
+                Comment.LikeCount--;
+                _db.CommentRatings.Remove(commentRatingFromDB);
+            }
+            _db.SaveChanges();
+            return RedirectToAction("Index", new { id = HttpContext.Session.GetInt32("currentPost") });
+        }
+
+        public IActionResult ToggleDislikeComment(int id)
+        {
+            var commentRatingFromDB = _db.CommentRatings.FirstOrDefault(c => c.CommentId == id && c.UserId == HttpContext.Session.GetInt32("currentUser"));
+            Comment = _db.Comments.FirstOrDefault(c => c.CommentId == id);
+            if (commentRatingFromDB == null)
+            {
+                commentRatingFromDB = new CommentRating
+                {
+                    Comment = Comment,
+                    User = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser")),
+                    IsLike = false
+                };
+                _db.CommentRatings.Add(commentRatingFromDB);
+                Comment.DislikeCount++;
+            }
+            else if (commentRatingFromDB.IsLike)
+            {
+                commentRatingFromDB.IsLike = true;
+                Comment.DislikeCount++;
+                Comment.LikeCount--;
+            }
+            else if (!commentRatingFromDB.IsLike)
+            {
+                Comment.DislikeCount--;
+                _db.CommentRatings.Remove(commentRatingFromDB);
+            }
+            _db.SaveChanges();
+            return RedirectToAction("Index", new { id = HttpContext.Session.GetInt32("currentPost") });
+        }
+
+        public IActionResult RemoveCommentRating(int id)
+        {
+            var commentRatingFromDB = _db.CommentRatings.FirstOrDefault(c => c.CommentId == id && c.UserId == HttpContext.Session.GetInt32("currentUser"));
+            if (commentRatingFromDB == null)
+            {
+                return NotFound();
+            }
+            _db.CommentRatings.Remove(commentRatingFromDB);
+            _db.SaveChanges();
+            return RedirectToAction("Index", new { id = HttpContext.Session.GetInt32("currentPost") });
+        }
     }
 }

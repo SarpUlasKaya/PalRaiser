@@ -50,14 +50,18 @@ namespace PalRaiserMVC.Controllers
 
         public IActionResult SendRequest(int id)
         {
-            FollowRequest = new FollowRequest
+            FollowRequest = _db.FollowRequests.FirstOrDefault(f => f.ReceiverId == id && f.SenderId == HttpContext.Session.GetInt32("currentUser"));
+            if (FollowRequest == null)
             {
-                Sender = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser")),
-                Receiver = _db.AppUsers.FirstOrDefault(u => u.UserId == id),
-                IsAccepted = false
-            };
-            _db.FollowRequests.Add(FollowRequest);
-            _db.SaveChanges();
+                FollowRequest = new FollowRequest
+                {
+                    Sender = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser")),
+                    Receiver = _db.AppUsers.FirstOrDefault(u => u.UserId == id),
+                    IsAccepted = false
+                };
+                _db.FollowRequests.Add(FollowRequest);
+                _db.SaveChanges();
+            }
             return RedirectToAction("ViewProfile", "AppUsers", new { id = id });
         }
 

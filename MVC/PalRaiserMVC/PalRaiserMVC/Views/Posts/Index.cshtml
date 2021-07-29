@@ -51,8 +51,8 @@
                                     @Html.DisplayFor(m => item.Date)
                                 </td>
                                 <td>
-                                    <button class="btn btn-danger btn-sm"> Like (@Html.DisplayFor(m => item.LikeCount))</button>
-                                    <button class="btn btn-danger btn-sm"> Dislike (@Html.DisplayFor(m => item.DislikeCount))</button>
+                                    <a asp-area="" asp-controller="Posts" asp-action="ToggleLikePost" asp-route-id="@item.PostId" class="btn btn-success btn-sm"> Like (@Html.DisplayFor(m => item.LikeCount))</a>
+                                    <a asp-area="" asp-controller="Posts" asp-action="ToggleDislikePost" asp-route-id="@item.PostId" class="btn btn-danger btn-sm"> Dislike (@Html.DisplayFor(m => item.DislikeCount))</a>
                                 </td>
                                 <td>
                                     <a asp-area="" asp-controller="Comments" asp-action="Index" asp-route-id="@item.PostId" class="btn btn-info btn-sm text-white">
@@ -73,8 +73,14 @@
             }
             else
             {
-                <p>No topics found.</p>
+                <p>No posts found.</p>
             }
         </form>
+    </div>
+    <br />
+    <div class="col-3">
+        <a asp-controller="AppUsers" asp-action="ViewProfile" asp-route-id="@HttpContextAccessor.HttpContext.Session.GetInt32("profileUser")" class="btn btn-success form-control">
+            Back To Profile
+        </a>
     </div>
 </div>

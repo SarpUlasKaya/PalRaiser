@@ -78,5 +78,77 @@ namespace PalRaiserMVC.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public IActionResult ToggleLikeTopic(int id)
+        {
+            var topicRatingFromDB = _db.TopicRatings.FirstOrDefault(t => t.TopicId == id && t.UserId == HttpContext.Session.GetInt32("currentUser"));
+            Topic = _db.Topics.FirstOrDefault(t => t.TopicId == id);
+            if (topicRatingFromDB == null)
+            {
+                topicRatingFromDB = new TopicRating
+                {
+                    Topic = Topic,
+                    User = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser")),
+                    IsLike = true
+                };
+                _db.TopicRatings.Add(topicRatingFromDB);
+                Topic.LikeCount++;
+            }
+            else if (!topicRatingFromDB.IsLike)
+            {
+                topicRatingFromDB.IsLike = true;
+                Topic.DislikeCount--;
+                Topic.LikeCount++;
+            }
+            else if (topicRatingFromDB.IsLike)
+            {
+                Topic.LikeCount--;
+                _db.TopicRatings.Remove(topicRatingFromDB);
+            }
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult ToggleDislikeTopic(int id)
+        {
+            var topicRatingFromDB = _db.TopicRatings.FirstOrDefault(t => t.TopicId == id && t.UserId == HttpContext.Session.GetInt32("currentUser"));
+            Topic = _db.Topics.FirstOrDefault(t => t.TopicId == id);
+            if (topicRatingFromDB == null)
+            {
+                topicRatingFromDB = new TopicRating
+                {
+                    Topic = Topic,
+                    User = _db.AppUsers.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("currentUser")),
+                    IsLike = false
+                };
+                _db.TopicRatings.Add(topicRatingFromDB);
+                Topic.DislikeCount++;
+            }
+            else if (topicRatingFromDB.IsLike)
+            {
+                topicRatingFromDB.IsLike = true;
+                Topic.DislikeCount++;
+                Topic.LikeCount--;
+            }
+            else if (!topicRatingFromDB.IsLike)
+            {
+                Topic.DislikeCount--;
+                _db.TopicRatings.Remove(topicRatingFromDB);
+            }
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult RemoveTopicRating(int id)
+        {
+            var topicRatingFromDB = _db.TopicRatings.FirstOrDefault(t => t.TopicId == id && t.UserId == HttpContext.Session.GetInt32("currentUser"));
+            if (topicRatingFromDB == null)
+            {
+                return NotFound();
+            }
+            _db.TopicRatings.Remove(topicRatingFromDB);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

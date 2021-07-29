@@ -51,8 +51,8 @@
                                     @Html.DisplayFor(m => item.Body)
                                 </td>
                                 <td>
-                                    <button class="btn btn-danger btn-sm"> Like (@Html.DisplayFor(m => item.LikeCount))</button>
-                                    <button class="btn btn-danger btn-sm"> Dislike (@Html.DisplayFor(m => item.DislikeCount))</button>
+                                    <a asp-area="" asp-controller="Comments" asp-action="ToggleLikeComment" asp-route-id="@item.CommentId" class="btn btn-success btn-sm"> Like (@Html.DisplayFor(m => item.LikeCount))</a>
+                                    <a asp-area="" asp-controller="Comments" asp-action="ToggleDislikeComment" asp-route-id="@item.CommentId" class="btn btn-danger btn-sm"> Dislike (@Html.DisplayFor(m => item.DislikeCount))</a>
                                 </td>
                                 @if (item.CommentorId == @HttpContextAccessor.HttpContext.Session.GetInt32("currentUser"))
                                 {

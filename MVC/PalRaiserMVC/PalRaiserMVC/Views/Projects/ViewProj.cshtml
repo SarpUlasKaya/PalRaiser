@@ -9,14 +9,11 @@
     @if (@HttpContextAccessor.HttpContext.Session.GetInt32("canEditProj") == 1)
     {
         <div class="form-group row">
-            <div class="col-3">
-
+            <div class="col-4">
+                <a asp-action="UpsertProj" asp-route-id="@(Model.ProjectId)" class="btn btn-success btn-sm text-white">Edit Project</a>
             </div>
-            <div class="col-3">
-                <a asp-action="UpsertProj" asp-route-id="@(Model.ProjectId)" class="btn btn-success btn-sm text-white">Edit</a>
-            </div>
-            <div class="col-3">
-                <a asp-action="DeleteProj" asp-route-id="@(Model.ProjectId)" onclick="return confirm('Are you sure you want to delete the project?')" class="btn btn-danger btn-sm">Delete</a>
+            <div class="col-4">
+                <a asp-action="DeleteProj" asp-route-id="@(Model.ProjectId)" onclick="return confirm('Are you sure you want to delete the project?')" class="btn btn-danger btn-sm">Delete Project</a>
             </div>
         </div>
     }
@@ -64,53 +61,56 @@
     </div>
 
     <div class="form-group row">
-        <div class="col-3">
+        <div class="col-6">
             <a asp-area="" asp-controller="Goals" asp-action="Index" class="btn btn-success">
                 See Fundraiser Goals
             </a>
         </div>
-        <div class="col-6">
+        <div class="col-3">
 
         </div>
     </div>
     <div class="form-group row">
-        <div class="col-3">
+        <div class="col-6">
             <a asp-area="" asp-controller="Reports" asp-action="Index" class="btn btn-danger">
                 See Reports (@(Model.ReportCount))
             </a>
         </div>
-        <div class="col-6">
+        <div class="col-3">
 
         </div>
     </div>
     <div class="form-group row">
-        <div class="col-3">
+        <div class="col-6">
             <a asp-area="" asp-controller="Updates" asp-action="Index" class="btn btn-info">
                 See News and Updates
             </a>
         </div>
-        <div class="col-6">
+        <div class="col-3">
 
         </div>
     </div>
     <div class="form-group row">
-        <div class="col-3">
+        <div class="col-6">
             <a asp-area="" asp-controller="Topics" asp-action="Index" class="btn btn-warning">
                 See Discussions
             </a>
         </div>
-        <div class="col-6">
+        <div class="col-3">
 
         </div>
     </div>
 
     <div class="form-group row">
-        <div class="col-5">
-            <button class="btn btn-danger btn-sm"> Like (@(Model.LikeCount))</button>
+        <div class="col-3">
+            <a asp-area="" asp-controller="Projects" asp-action="ToggleLikeProj" asp-route-id="@(Model.ProjectId)" class="btn btn-success btn-sm"> Like (@(Model.LikeCount))</a>
         </div>
-        <div class="col-5">
-            <button class="btn btn-danger btn-sm"> Dislike (@(Model.DislikeCount))</button>
+        <div class="col-3">
+            <a asp-area="" asp-controller="Projects" asp-action="ToggleDislikeProj" asp-route-id="@(Model.ProjectId)" class="btn btn-danger btn-sm"> Dislike (@(Model.DislikeCount))</a>
         </div>
+        @*<div class="col-3">
+            <a asp-area="" asp-controller="Projects" asp-action="RemoveProjRating" asp-route-id="@(Model.ProjectId)" class="btn btn-danger btn-sm"> Remove Rating</a>
+        </div>*@
     </div>
 
 </div>
