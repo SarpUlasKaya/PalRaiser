@@ -74,6 +74,20 @@ namespace PalRaiserMVC.Controllers
             {
                 return NotFound();
             }
+            foreach (Comment comment in _db.Comments.ToList())
+            {
+                if (comment.PostId == id)
+                {
+                    _db.Comments.Remove(comment);
+                }
+            }
+            foreach (PostRating postRating in _db.PostRatings.ToList())
+            {
+                if (postRating.PostId == id)
+                {
+                    _db.PostRatings.Remove(postRating);
+                }
+            }
             _db.Posts.Remove(postFromDB);
             _db.SaveChanges();
             return RedirectToAction("Index");
