@@ -34,7 +34,8 @@
                 <label asp-for="Summary">Project Short Summary: </label>
             </div>
             <div class="col-6">
-                <input asp-for="Summary" class="form-control" />
+                <textarea asp-for="Summary" rows="3" cols="40" class="form-control"></textarea>
+                @*<input asp-for="Summary" class="form-control" />*@
                 <span asp-validation-for="Summary" class="text-danger"></span>
             </div>
         </div>
@@ -43,7 +44,8 @@
                 <label asp-for="About">Detailed Information About The Project: </label>
             </div>
             <div class="col-6">
-                <input asp-for="About" class="form-control" />
+                <textarea asp-for="About" rows="7" cols="40" class="form-control"></textarea>
+                @*<input asp-for="About" class="form-control" />*@
                 <span asp-validation-for="About" class="text-danger"></span>
             </div>
         </div>

@@ -22,7 +22,7 @@
                 <label asp-for="ReplyBody">Reply: </label>
             </div>
             <div class="col-6">
-                <input asp-for="ReplyBody" class="form-control" />
+                <textarea asp-for="ReplyBody" rows="5" cols="40" class="form-control"></textarea>
                 <span asp-validation-for="ReplyBody" class="text-danger"></span>
             </div>
         </div>
