@@ -130,7 +130,7 @@ namespace PalRaiserMVC.Controllers
             }
             else if (commentRatingFromDB.IsLike)
             {
-                commentRatingFromDB.IsLike = true;
+                commentRatingFromDB.IsLike = false;
                 Comment.DislikeCount++;
                 Comment.LikeCount--;
             }

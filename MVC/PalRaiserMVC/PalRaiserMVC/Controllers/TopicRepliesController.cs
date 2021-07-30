@@ -113,7 +113,7 @@ namespace PalRaiserMVC.Controllers
             return RedirectToAction("Index", new { id = HttpContext.Session.GetInt32("currentTopic") });
         }
 
-        public IActionResult ToggleDislikeTopic(int id)
+        public IActionResult ToggleDislikeTopicReply(int id)
         {
             var topicReplyRatingFromDB = _db.TopicReplyRatings.FirstOrDefault(t => t.TopicReplyId == id && t.UserId == HttpContext.Session.GetInt32("currentUser"));
             TopicReply = _db.TopicReplies.FirstOrDefault(t => t.TopicReplyId == id);
@@ -130,7 +130,7 @@ namespace PalRaiserMVC.Controllers
             }
             else if (topicReplyRatingFromDB.IsLike)
             {
-                topicReplyRatingFromDB.IsLike = true;
+                topicReplyRatingFromDB.IsLike = false;
                 TopicReply.DislikeCount++;
                 TopicReply.LikeCount--;
             }

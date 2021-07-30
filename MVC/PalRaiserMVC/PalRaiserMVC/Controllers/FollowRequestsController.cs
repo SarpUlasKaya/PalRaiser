@@ -82,7 +82,7 @@ namespace PalRaiserMVC.Controllers
         {
             var followRequestFromDB = _db.FollowRequests.FirstOrDefault(f => f.SenderId == id);
             bool redirect = followRequestFromDB.IsAccepted;
-            if (FollowRequest == null)
+            if (followRequestFromDB == null)
             {
                 return NotFound();
             }

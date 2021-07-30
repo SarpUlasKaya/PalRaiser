@@ -126,7 +126,7 @@ namespace PalRaiserMVC.Controllers
             }
             else if (postRatingFromDB.IsLike)
             {
-                postRatingFromDB.IsLike = true;
+                postRatingFromDB.IsLike = false;
                 Post.DislikeCount++;
                 Post.LikeCount--;
             }

@@ -66,9 +66,7 @@
                                     <a asp-action="Unfollow" asp-route-id="@item.ReceiverId" class="btn btn-danger btn-sm"> Remove Request </a>
                                 </td>
                                 <td>
-                                    <a asp-controller="AppUsers" asp-action="ViewProfile" asp-route-id="@item.SenderId" class="btn btn-success form-control">
-                                        View Profile
-                                    </a>
+                                    <a asp-controller="AppUsers" asp-action="ViewProfile" asp-route-id="@item.ReceiverId" class="btn btn-success form-control"> View Profile </a>
                                 </td>
                             </tr>
                         }
