@@ -12,11 +12,10 @@ function loadDataTable() {
             "datatype": "json"
         },
         "columns": [
-            { "data": "userName", "width": "12%" },
-            { "data": "createdAt", "width": "12%" },
-            { "data": "lastLogin", "width": "12%" },
-            { "data": "gender", "width": "12%" },
-            { "data": "birthday", "width": "12%" },
+            { "data": "userName", "width": "15%" },
+            { "data": "createdAt", "width": "15%" },
+            { "data": "lastLogin", "width": "15%" },
+            { "data": "gender", "width": "15%" },
             {
                 "data": "userId",
                 "render": function (data) {

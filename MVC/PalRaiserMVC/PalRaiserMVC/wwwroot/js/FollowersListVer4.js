@@ -12,11 +12,10 @@ function loadDataTable() {
             "datatype": "json"
         },
         "columns": [
-            { "data": "sender.userName", "width": "10%" },
-            { "data": "sender.createdAt", "width": "10%" },
-            { "data": "sender.lastLogin", "width": "10%" },
-            { "data": "sender.gender", "width": "10%" },
-            { "data": "sender.birthday", "width": "10%" },
+            { "data": "sender.userName", "width": "12%" },
+            { "data": "sender.createdAt", "width": "12%" },
+            { "data": "sender.lastLogin", "width": "12%" },
+            { "data": "sender.gender", "width": "12%" },
             {
                 "data": "senderId",
                 "render": function (data) {
@@ -27,7 +26,7 @@ function loadDataTable() {
                             <a href="/followRequests/DenyOrRemoveFollower?id=${data}" class='btn btn-danger text-white' style='cursor:pointer; width:130px;'>
                                 Remove Follower
                             </a>`;
-                }, "width": "50%"
+                }, "width": "52%"
             }
         ],
         "language": {

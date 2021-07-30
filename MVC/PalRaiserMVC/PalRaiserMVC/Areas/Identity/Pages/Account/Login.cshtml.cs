@@ -97,8 +97,9 @@ namespace PalRaiserMVC.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    AppUser appUser = _db.AppUsers.FirstOrDefault(u => u.AuthUser.Id == user.Id);
+                    AppUser appUser = _db.AppUsers.FirstOrDefault(u => u.AuthId == user.Id);
                     appUser.LastLogin = DateTimeOffset.Now;
+                    _db.SaveChanges();
                     HttpContext.Session.SetInt32("currentUser", appUser.UserId);
                     return LocalRedirect(returnUrl);
                 }

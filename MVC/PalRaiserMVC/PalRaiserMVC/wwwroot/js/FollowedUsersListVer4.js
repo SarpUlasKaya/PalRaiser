@@ -12,11 +12,10 @@ function loadDataTable() {
             "datatype": "json"
         },
         "columns": [
-            { "data": "receiver.userName", "width": "10%" },
-            { "data": "receiver.createdAt", "width": "10%" },
-            { "data": "receiver.lastLogin", "width": "10%" },
-            { "data": "receiver.gender", "width": "10%" },
-            { "data": "receiver.birthday", "width": "10%" },
+            { "data": "receiver.userName", "width": "12%" },
+            { "data": "receiver.createdAt", "width": "12%" },
+            { "data": "receiver.lastLogin", "width": "12%" },
+            { "data": "receiver.gender", "width": "12%" },
             {
                 "data": "receiverId",
                 "render": function (data) {
@@ -27,7 +26,7 @@ function loadDataTable() {
                             <a href="/followRequests/Unfollow?id=${data}" class='btn btn-danger text-white' style='cursor:pointer; width:130px;'>
                                 Unfollow User
                             </a>`;
-                }, "width": "50%"
+                }, "width": "52%"
             }
         ],
         "language": {

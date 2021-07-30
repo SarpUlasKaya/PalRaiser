@@ -12,7 +12,7 @@
             <label asp-for="CreatedAt">Joined:</label>
         </div>
         <div class="col-6">
-            <label asp-for="CreatedAt">@(Model.CreatedAt)</label>
+            <label asp-for="CreatedAt">@Html.DisplayFor(m => m.CreatedAt)</label>
         </div>
     </div>
     <div class="form-group row">
@@ -20,7 +20,7 @@
             <label asp-for="LastLogin">Last Login:</label>
         </div>
         <div class="col-6">
-            <label asp-for="LastLogin">@(Model.LastLogin)</label>
+            <label asp-for="LastLogin">@Html.DisplayFor(m => m.LastLogin)</label>
         </div>
     </div>
     @if (Model.Birthday != null)
@@ -30,7 +30,7 @@
                 <label asp-for="Birthday">Birthday: </label>
             </div>
             <div class="col-6">
-                <label asp-for="Birthday">@(Model.Birthday)</label>
+                <label asp-for="Birthday">@(Model.Birthday.Value.ToString("MM/dd/yyyy"))</label>
             </div>
         </div>
     }
