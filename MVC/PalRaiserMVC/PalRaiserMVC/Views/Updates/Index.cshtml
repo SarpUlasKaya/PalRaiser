@@ -1,0 +1,78 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model List<PalRaiserMVC.Models.Update>
+
+<h2 class="text-info">List of Updates</h2>
+<br />
+
+<div class="border container" style="padding:30px;">
+    @if (@HttpContextAccessor.HttpContext.Session.GetInt32("canEditProj") == 1)
+    {
+        <div class="col-6">
+
+        </div>
+        <div class="col-3 offset-3">
+            <a asp-action="UpsertUpdate" asp-controller="Updates" class="btn btn-info form-control text-white">
+                Add New Update
+            </a>
+        </div>
+    }
+    <div class="col-12 border p-3 mt-3">
+        <form method="post">
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-striped border">
+                    <tr class="table-secondary">
+                        <th>
+                            <label asp-for="FirstOrDefault().Title"> Update Title </label>
+                        </th>
+                        <th>
+                            @*@Html.DisplayNameFor(m=>m.Projects.FirstOrDefault().Summary)*@
+                            <label asp-for="FirstOrDefault().Date"> Date </label>
+                        </th>
+                        <th>
+                            <label asp-for="FirstOrDefault().Description"> Description </label>
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        @if (item.ProjectId == @HttpContextAccessor.HttpContext.Session.GetInt32("currentProj"))
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(m => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.Date)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.Description)
+                                </td>
+                                @if (item.Project.PublisherId == @HttpContextAccessor.HttpContext.Session.GetInt32("currentUser"))
+                                {
+                                    <td>
+                                        <a asp-action="DeleteUpdate" asp-route-id="@item.UpdateId" onclick="return confirm('Are you sure you want to remove this update?')" class="btn btn-danger btn-sm">Delete</a>
+                                        <a asp-action="UpsertUpdate" asp-route-id="@item.UpdateId" class="btn btn-success btn-sm text-white">Edit</a>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    }
+                </table>
+            }
+            else
+            {
+                <p>No updates found.</p>
+            }
+        </form>
+    </div>
+    <br />
+    <div class="col-3">
+        <a asp-controller="Projects" asp-action="ViewProj" asp-route-id="@HttpContextAccessor.HttpContext.Session.GetInt32("currentProj")" class="btn btn-success form-control">
+            Back To Project
+        </a>
+    </div>
+</div>

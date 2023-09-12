@@ -1,0 +1,46 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model PalRaiserMVC.Models.Comment
+
+<br />
+<h2 class="text-info">Topic ID: @HttpContextAccessor.HttpContext.Session.GetInt32("currentPost")</h2>
+<br />
+
+<br />
+<h2 class="text-info">@(Model.CommentId!=0 ? "Edit" : "Add") Comment</h2>
+<br />
+
+<div class="border container" style="padding:30px;">
+    <form method="post">
+        @if (Model.CommentId != 0)
+        {
+            <input type="hidden" asp-for="CommentId" />
+        }
+        <div class="text_danger" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Body">Comment Body: </label>
+            </div>
+            <div class="col-6">
+                <textarea asp-for="Body" rows="3" cols="40" class="form-control"></textarea>
+                <span asp-validation-for="Body" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-3 offset-3">
+                <button type="Submit" class="btn btn-primary form-control">
+                    @(Model.CommentId!=0 ? "Update" : "Create")
+                </button>
+            </div>
+            <div class="col-3">
+                <a asp-action="Index" , asp-route-id="@HttpContextAccessor.HttpContext.Session.GetInt32("currentPost")" class="btn btn-success form-control">
+                    Back To Comments
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

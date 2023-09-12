@@ -1,0 +1,49 @@
+﻿@model PalRaiserMVC.Models.Topic
+
+<br />
+<h2 class="text-info">@(Model.TopicId!=0 ? "Edit" : "Create") Discussion Topic</h2>
+<br />
+
+<div class="border container" style="padding:30px;">
+    <form method="post">
+        @if (Model.TopicId != 0)
+        {
+            <input type="hidden" asp-for="TopicId" />
+        }
+        <div class="text_danger" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="TopicTitle">Title: </label>
+            </div>
+            <div class="col-6">
+                <input asp-for="TopicTitle" class="form-control" />
+                <span asp-validation-for="TopicTitle" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="TopicBody">Body: </label>
+            </div>
+            <div class="col-6">
+                <textarea asp-for="TopicBody" rows="5" cols="40" class="form-control"></textarea>
+                <span asp-validation-for="TopicBody" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-3 offset-3">
+                <button type="Submit" class="btn btn-primary form-control">
+                    @(Model.TopicId!=0 ? "Update" : "Create")
+                </button>
+            </div>
+            <div class="col-3">
+                <a asp-action="Index" class="btn btn-success form-control">
+                    Back To Topics
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

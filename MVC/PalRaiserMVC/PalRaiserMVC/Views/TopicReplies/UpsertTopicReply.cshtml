@@ -1,0 +1,46 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model PalRaiserMVC.Models.TopicReply
+
+<br />
+<h2 class="text-info">Topic ID: @HttpContextAccessor.HttpContext.Session.GetInt32("currentTopic")</h2>
+<br />
+
+<br />
+<h2 class="text-info">@(Model.TopicReplyId!=0 ? "Edit" : "Add") Discussion Reply</h2>
+<br />
+
+<div class="border container" style="padding:30px;">
+    <form method="post">
+        @if (Model.TopicReplyId != 0)
+        {
+            <input type="hidden" asp-for="TopicReplyId" />
+        }
+        <div class="text_danger" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="ReplyBody">Reply: </label>
+            </div>
+            <div class="col-6">
+                <textarea asp-for="ReplyBody" rows="5" cols="40" class="form-control"></textarea>
+                <span asp-validation-for="ReplyBody" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-3 offset-3">
+                <button type="Submit" class="btn btn-primary form-control">
+                    @(Model.TopicReplyId!=0 ? "Update" : "Create")
+                </button>
+            </div>
+            <div class="col-3">
+                <a asp-action="Index" , asp-route-id="@HttpContextAccessor.HttpContext.Session.GetInt32("currentTopic")" class="btn btn-success form-control">
+                    Back To Replies
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

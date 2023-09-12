@@ -1,0 +1,95 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model List<PalRaiserMVC.Models.Topic>
+
+<h2 class="text-info">List of Topics on the Project</h2>
+<br />
+
+<div class="border container" style="padding:30px;">
+    <div class="col-6">
+
+    </div>
+    <div class="col-3 offset-3">
+        <a asp-action="UpsertTopic" asp-controller="Topics" class="btn btn-info form-control text-white">
+            Add New Discussion Topic
+        </a>
+    </div>
+    <div class="col-12 border p-3 mt-3">
+        <form method="post">
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-striped border">
+                    <tr class="table-secondary">
+                        <th>
+                            <label asp-for="FirstOrDefault().Creator.UserName"> Added By </label>
+                        </th>
+                        <th>
+                            <label asp-for="FirstOrDefault().Date"> Date </label>
+                        </th>
+                        <th>
+                            <label asp-for="FirstOrDefault().TopicTitle"> Discussion Topic </label>
+                        </th>
+                        <th>
+                            <label asp-for="FirstOrDefault().TopicBody"> Discussion Body</label>
+                        </th>
+                        <th>
+                            <label> Rate Topic </label>
+                        </th>
+                        <th>
+                            <label> Replies </label>
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        @if (item.ProjectId == @HttpContextAccessor.HttpContext.Session.GetInt32("currentProj"))
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(m => item.Creator.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.Date)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.TopicTitle)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.TopicBody)
+                                </td>
+                                <td>
+                                    <a asp-area="" asp-controller="Topics" asp-action="ToggleLikeTopic" asp-route-id="@item.TopicId" class="btn btn-success btn-sm"> Like (@Html.DisplayFor(m => item.LikeCount))</a>
+                                    <a asp-area="" asp-controller="Topics" asp-action="ToggleDislikeTopic" asp-route-id="@item.TopicId" class="btn btn-danger btn-sm"> Dislike (@Html.DisplayFor(m => item.DislikeCount))</a>
+                                </td>
+                                <td>
+                                    <a asp-area="" asp-controller="TopicReplies" asp-action="Index" asp-route-id="@item.TopicId" class="btn btn-info btn-sm text-white">
+                                        See Replies (@Html.DisplayFor(m => item.NoOfReplies))
+                                    </a>
+                                </td>
+                                @if (item.CreatorId == @HttpContextAccessor.HttpContext.Session.GetInt32("currentUser"))
+                                {
+                                    <td>
+                                        <a asp-action="DeleteTopic" asp-route-id="@item.TopicId" onclick="return confirm('Are you sure you want to remove this topic?')" class="btn btn-danger btn-sm">Delete</a>
+                                        <a asp-action="UpsertTopic" asp-route-id="@item.TopicId" class="btn btn-success btn-sm text-white">Edit</a>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    }
+                </table>
+            }
+            else
+            {
+                <p>No topics found.</p>
+            }
+        </form>
+    </div>
+    <br />
+    <div class="col-3">
+        <a asp-controller="Projects" asp-action="ViewProj" asp-route-id="@HttpContextAccessor.HttpContext.Session.GetInt32("currentProj")" class="btn btn-success form-control">
+            Back To Project
+        </a>
+    </div>
+</div>

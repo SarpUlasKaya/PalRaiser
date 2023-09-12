@@ -1,0 +1,74 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model List<PalRaiserMVC.Models.TopicReply>
+
+<h2 class="text-info">Replies to The Discussion</h2>
+<br />
+
+<div class="border container" style="padding:30px;">
+    <div class="col-6">
+
+    </div>
+    <div class="col-3 offset-3">
+        <a asp-action="UpsertTopicReply" asp-controller="TopicReplies" class="btn btn-info form-control text-white">
+            Add New Reply
+        </a>
+    </div>
+    <div class="col-12 border p-3 mt-3">
+        <form method="post">
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-striped border">
+                    <tr class="table-secondary">
+                        <th>
+                            <label asp-for="FirstOrDefault().User.UserName"> Posted By </label>
+                        </th>
+                        <th>
+                            <label asp-for="FirstOrDefault().Date"> Date </label>
+                        </th>
+                        <th>
+                            <label asp-for="FirstOrDefault().ReplyBody"> Reply </label>
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        @if (item.TopicId == @HttpContextAccessor.HttpContext.Session.GetInt32("currentTopic"))
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(m => item.User.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.Date)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.ReplyBody)
+                                </td>
+                                @if (item.UserId == @HttpContextAccessor.HttpContext.Session.GetInt32("currentUser"))
+                                {
+                                    <td>
+                                        <a asp-action="DeleteTopicReply" asp-route-id="@item.TopicReplyId" onclick="return confirm('Are you sure you want to remove your reply?')" class="btn btn-danger btn-sm">Delete</a>
+                                        <a asp-action="UpsertTopicReply" asp-route-id="@item.TopicReplyId" class="btn btn-success btn-sm text-white">Edit</a>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    }
+                </table>
+            }
+            else
+            {
+                <p>No replies found.</p>
+            }
+        </form>
+    </div>
+    <br />
+    <div class="col-3">
+        <a asp-area="" asp-controller="Topics" asp-action="Index" class="btn btn-warning">
+            Back to Topics
+        </a>
+    </div>
+</div>

@@ -9,6 +9,7 @@ namespace PalRaiserMVC.Models
 {
     public class TopicReply
     {
+        [Key]
         public int TopicReplyId { get; set; }
 
         [ForeignKey("TopicId")]
@@ -23,5 +24,9 @@ namespace PalRaiserMVC.Models
         public string ReplyBody { get; set; }
 
         public DateTimeOffset Date { get; set; }
+        public int LikeCount { get; set; }
+        public int DislikeCount { get; set; }
+
+        public virtual ICollection<TopicReplyRating> Ratings { get; set; }
     }
 }

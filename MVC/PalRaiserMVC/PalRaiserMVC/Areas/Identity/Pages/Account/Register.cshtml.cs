@@ -7,13 +7,13 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using PalRaiserMVC.Areas.Identity.Data;
 using PalRaiserMVC.Models;
 
 namespace PalRaiserMVC.Areas.Identity.Pages.Account
@@ -25,17 +25,20 @@ namespace PalRaiserMVC.Areas.Identity.Pages.Account
         private readonly UserManager<AuthUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDBContext _db;
 
         public RegisterModel(
             UserManager<AuthUser> userManager,
             SignInManager<AuthUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDBContext db)
         {
-            _userManager = userManager;
             _signInManager = signInManager;
+            _userManager = userManager;
             _logger = logger;
             _emailSender = emailSender;
+            _db = db;
         }
 
         [BindProperty]
@@ -75,8 +78,9 @@ namespace PalRaiserMVC.Areas.Identity.Pages.Account
 
             [Required]
             [Range(100000000000000, 9999999999999999, ErrorMessage = "Your credit card number must be 15 or 16 digits long")]
+            //[DataType(DataType.CreditCard)]
             [Display(Name = "Credit Card No")]
-            public int CreditCardNo { get; set; }
+            public long CreditCardNo { get; set; }
 
             [Required]
             [Range(100, 9999, ErrorMessage = "Your card security code must be 15 or 16 digits long")]
@@ -87,10 +91,23 @@ namespace PalRaiserMVC.Areas.Identity.Pages.Account
             [DataType(DataType.Date)]
             [Display(Name = "Card Expiry Date")]
             public DateTime CardExpiryDate { get; set; }
+
+            [DataType(DataType.Text)]
+            [Display(Name = "Gender")]
+            public string Gender { get; set; }
+
+            [DataType(DataType.Date)]
+            [Display(Name = "Birthday")]
+            public DateTime Birthday { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                Response.Redirect("/");
+            }
+
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -101,13 +118,16 @@ namespace PalRaiserMVC.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var appUser = new AppUser { UserName = Input.FirstName + Input.LastName,
-                    CardNumber = Input.CreditCardNo, CardSecNo = Input.CardSecurityNo, CardExpDate = Input.CardExpiryDate };
+                var appUser = new AppUser { UserName = Input.FirstName + " " + Input.LastName,
+                    CardNumber = Input.CreditCardNo, CardSecNo = Input.CardSecurityNo, CardExpDate = Input.CardExpiryDate,
+                    LastLogin = DateTimeOffset.Now, CreatedAt = DateTimeOffset.Now, Gender = Input.Gender, Birthday = Input.Birthday };
                 var user = new AuthUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName,
                     LastName = Input.LastName, AppUser = appUser };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    _db.AppUsers.Add(appUser);
+                    HttpContext.Session.SetInt32("currentUser", appUser.UserId);
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

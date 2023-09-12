@@ -6,12 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PalRaiserMVC.Areas.Identity.Data;
-using PalRaiserMVC.Data;
 using PalRaiserMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace PalRaiserMVC
@@ -36,16 +35,28 @@ namespace PalRaiserMVC
             //    .AddEntityFrameworkStores<AuthDBContext>()
             //    .AddDefaultTokenProviders();
 
-            services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))); //connection string
+            //services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))); //connection string
             
-            services.AddControllersWithViews().AddRazorRuntimeCompilation(); //brings in support for working with MVC in .Net Core
+            services.AddControllersWithViews().AddRazorRuntimeCompilation().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            ); //brings in support for working with MVC in .Net Core
             services.AddRazorPages();
-            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDBContext>();
 
-            //CHECK LATER
-            //services.AddScoped<Repository>();
-            //services.AddHttpContextAccessor();
-            //services.AddSession(); // brings in session capability
+            services.AddHttpContextAccessor();
+
+            //services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDBContext>();
+
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+            //services.AddControllers().AddJsonOptions(x =>
+            //    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,10 +76,11 @@ namespace PalRaiserMVC
             app.UseStaticFiles();
 
             app.UseRouting();
-            //app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

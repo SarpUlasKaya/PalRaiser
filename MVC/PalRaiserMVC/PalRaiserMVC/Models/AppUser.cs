@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,10 +12,14 @@ namespace PalRaiserMVC.Models
         [Key]
         public int UserId { get; set; }
 
+        [ForeignKey("AuthId")]
+        public virtual AuthUser AuthUser { get; set; }
+        public string AuthId { get; set; }
+
         [Required]
         public string UserName { get; set; }
         [Required]
-        public int CardNumber { get; set; }
+        public long CardNumber { get; set; }
         [Required]
         public int CardSecNo { get; set; }
         [Required]
@@ -22,14 +27,19 @@ namespace PalRaiserMVC.Models
 
         public DateTimeOffset LastLogin { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
         public string Gender { get; set; }
 
         public virtual ICollection<Project> PublishedProjects { get; set; }
         public virtual ICollection<Report> Reports { get; set; }
         public virtual ICollection<Topic> TopicsCreated { get; set; }
         public virtual ICollection<TopicReply> TopicReplies { get; set; }
+        public virtual ICollection<ProjectRating> ProjectRatings { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<TopicRating> TopicRatings { get; set; }
+        public virtual ICollection<TopicReplyRating> TopicReplyRatings { get; set; }
+        public virtual ICollection<PostRating> PostRatings { get; set; }
+        public virtual ICollection<CommentRating> CommentRatings { get; set; }
     }
 }

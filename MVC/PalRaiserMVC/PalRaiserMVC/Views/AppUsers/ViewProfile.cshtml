@@ -1,0 +1,121 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model PalRaiserMVC.Models.AppUser
+
+<br />
+<h2 class="text-info">@(Model.UserName)'s Profile</h2>
+<br />
+
+<div class="border container" style="padding:30px;">
+    <div class="form-group row">
+        <div class="col-3">
+            <label asp-for="CreatedAt">Joined:</label>
+        </div>
+        <div class="col-6">
+            <label asp-for="CreatedAt">@Html.DisplayFor(m => m.CreatedAt)</label>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-3">
+            <label asp-for="LastLogin">Last Login:</label>
+        </div>
+        <div class="col-6">
+            <label asp-for="LastLogin">@Html.DisplayFor(m => m.LastLogin)</label>
+        </div>
+    </div>
+    @if (Model.Birthday != null)
+    {
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Birthday">Birthday: </label>
+            </div>
+            <div class="col-6">
+                <label asp-for="Birthday">@(Model.Birthday.Value.ToString("MM/dd/yyyy"))</label>
+            </div>
+        </div>
+    }
+    @if (Model.Gender != null)
+    {
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Gender">Gender: </label>
+            </div>
+            <div class="col-6">
+                <label asp-for="Gender">@(Model.Gender)</label>
+            </div>
+        </div>
+    }
+    @if (@HttpContextAccessor.HttpContext.Session.GetInt32("canEditProfile") == 1)
+    {
+        <div class="form-group row">
+            <div class="col-4">
+                <a asp-area="" asp-controller="FollowRequests" asp-action="ViewReceivedRequests" class="btn btn-info">
+                    View Received Requests
+                </a>
+            </div>
+            <div class="col-4">
+                <a asp-area="" asp-controller="FollowRequests" asp-action="ViewSentRequests" class="btn btn-info">
+                    View Sent Requests
+                </a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <a asp-area="" asp-controller="FollowRequests" asp-action="ViewFollowers" class="btn btn-success">
+                    View Followers
+                </a>
+            </div>
+            <div class="col-4">
+                <a asp-area="" asp-controller="FollowRequests" asp-action="ViewFollowedUsers" class="btn btn-success">
+                    View Followed Users
+                </a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="form-group row">
+            <div class="col-4">
+                <a asp-area="" asp-controller="FollowRequests" asp-action="SendRequest" asp-route-id="@(Model.UserId)" onclick="return confirm('Click Ok to confirm. Your follow request will only be sent once. Check Sent Requests in your profile to make sure your request has been sent.')" class="btn btn-info">
+                    Send Follow Request
+                </a>
+            </div>
+            <div class="col-4">
+                
+            </div>
+        </div>
+    }
+    <div class="form-group row">
+        <div class="col-4">
+            <a asp-area="" asp-controller="Posts" asp-action="Index" class="btn btn-warning">
+                See @(Model.UserName)'s Posts
+            </a>
+        </div>
+        <div class="col-4">
+
+        </div>
+    </div>
+
+    <br />
+    <h2 class="text-info">@(Model.UserName)'s Projects</h2>
+    <br />
+    <div class="col-12 border p-3">
+        <table id="DT_load" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Raised</th>
+                    <th>Likes</th>
+                    <th>Dislikes</th>
+                    <th>Reports</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/userProjectsVer2.js"></script>
+}

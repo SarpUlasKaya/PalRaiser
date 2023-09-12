@@ -13,7 +13,7 @@
         <div class="text_danger" asp-validation-summary="ModelOnly"></div>
         <div class="form-group row">
             <div class="col-3">
-                <label asp-for="ProjName"></label>
+                <label asp-for="ProjName">Name of The Project:</label>
             </div>
             <div class="col-6">
                 <input asp-for="ProjName" class="form-control" />
@@ -22,29 +22,31 @@
         </div>
         <div class="form-group row">
             <div class="col-3">
-                <label asp-for="Summary"></label>
+                <label asp-for="Type">Type of Project: </label>
             </div>
             <div class="col-6">
-                <input asp-for="Summary" class="form-control" />
+                <input asp-for="Type" class="form-control" />
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Summary">Project Short Summary: </label>
+            </div>
+            <div class="col-6">
+                <textarea asp-for="Summary" rows="3" cols="40" class="form-control"></textarea>
+                @*<input asp-for="Summary" class="form-control" />*@
                 <span asp-validation-for="Summary" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group row">
             <div class="col-3">
-                <label asp-for="About"></label>
+                <label asp-for="About">Detailed Information About The Project: </label>
             </div>
             <div class="col-6">
-                <input asp-for="About" class="form-control" />
+                <textarea asp-for="About" rows="7" cols="40" class="form-control"></textarea>
+                @*<input asp-for="About" class="form-control" />*@
                 <span asp-validation-for="About" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-3">
-                <label asp-for="Type"></label>
-            </div>
-            <div class="col-6">
-                <input asp-for="Type" class="form-control" />
-                <span asp-validation-for="Type" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group row">
@@ -54,9 +56,18 @@
                 </button>
             </div>
             <div class="col-3">
-                <a asp-action="Index" class="btn btn-success form-control">
-                    Back To List
-                </a>
+                @if (Model.ProjectId != 0)
+                {
+                    <a asp-action="ViewProj" asp-route-id="@(Model.ProjectId)" class="btn btn-success form-control">
+                        Back To Project
+                    </a>
+                }
+                else
+                {
+                    <a asp-action="Index" class="btn btn-success form-control">
+                        Back To List
+                    </a>
+                }
             </div>
         </div>
     </form>

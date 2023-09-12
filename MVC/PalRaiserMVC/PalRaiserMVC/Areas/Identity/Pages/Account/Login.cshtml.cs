@@ -11,23 +11,29 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using PalRaiserMVC.Models;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace PalRaiserMVC.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<AuthUser> _userManager;
+        private readonly SignInManager<AuthUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly ApplicationDBContext _db;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, 
+        public LoginModel(SignInManager<AuthUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager)
+            UserManager<AuthUser> userManager,
+            ApplicationDBContext db)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _db = db;
         }
 
         [BindProperty]
@@ -56,6 +62,11 @@ namespace PalRaiserMVC.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                Response.Redirect("/");
+            }
+
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
@@ -82,9 +93,14 @@ namespace PalRaiserMVC.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var user = await _signInManager.UserManager.FindByNameAsync(Input.Email);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    AppUser appUser = _db.AppUsers.FirstOrDefault(u => u.AuthId == user.Id);
+                    appUser.LastLogin = DateTimeOffset.Now;
+                    _db.SaveChanges();
+                    HttpContext.Session.SetInt32("currentUser", appUser.UserId);
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

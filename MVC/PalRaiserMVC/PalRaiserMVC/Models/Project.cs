@@ -20,7 +20,7 @@ namespace PalRaiserMVC.Models
         public string About { get; set; }
         [Required]
         public string Type { get; set; }
-        
+
         public int AmountRaised { get; set; }
         public int LikeCount { get; set; }
         public int DislikeCount { get; set; }
@@ -29,10 +29,11 @@ namespace PalRaiserMVC.Models
         [ForeignKey("PublisherId")]
         public virtual AppUser Publisher { get; set; }
         public int? PublisherId { get; set; }
-        
+
         public virtual ICollection<Goal> Goals { get; set; }
         public virtual ICollection<Update> Updates { get; set; }
         public virtual ICollection<Report> Reports { get; set; }
         public virtual ICollection<Topic> Topics { get; set; }
+        public virtual ICollection<ProjectRating> Ratings { get; set; }
     }
 }

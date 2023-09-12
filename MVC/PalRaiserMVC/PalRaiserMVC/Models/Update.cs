@@ -9,6 +9,7 @@ namespace PalRaiserMVC.Models
 {
     public class Update
     {
+        [Key]
         public int UpdateId { get; set; }
 
         [ForeignKey("ProjectId")]
@@ -16,7 +17,7 @@ namespace PalRaiserMVC.Models
         public int ProjectId { get; set; }
 
         [Required]
-        public int Title { get; set; }
+        public string Title { get; set; }
         [Required]
         public string Description { get; set; }
 

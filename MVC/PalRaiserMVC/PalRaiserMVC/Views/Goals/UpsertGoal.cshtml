@@ -1,0 +1,49 @@
+﻿@model PalRaiserMVC.Models.Goal
+
+<br />
+<h2 class="text-info">@(Model.GoalId!=0 ? "Edit" : "Create") Fundraiser Goal</h2>
+<br />
+
+<div class="border container" style="padding:30px;">
+    <form method="post">
+        @if (Model.GoalId != 0)
+        {
+            <input type="hidden" asp-for="GoalId" />
+        }
+        <div class="text_danger" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Amount"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Description"></label>
+            </div>
+            <div class="col-6">
+                <textarea asp-for="Description" rows="3" cols="40" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-3 offset-3">
+                <button type="Submit" class="btn btn-primary form-control">
+                    @(Model.GoalId!=0 ? "Update" : "Create")
+                </button>
+            </div>
+            <div class="col-3">
+                <a asp-action="Index" class="btn btn-success form-control">
+                    Back To Goals
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

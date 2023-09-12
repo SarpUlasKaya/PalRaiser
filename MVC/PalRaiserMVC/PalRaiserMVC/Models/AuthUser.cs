@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PalRaiserMVC.Areas.Identity.Data
+namespace PalRaiserMVC.Models
 {
     public class AuthUser : IdentityUser
     {
